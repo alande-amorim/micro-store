@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 import { User } from '@app/common';
 import { compare, hashSync } from 'bcryptjs';
@@ -6,7 +6,6 @@ import { Response } from 'express';
 import { TokenPayload } from './interfaces/token-payload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-// import { TokenPayload } from './interfaces/token-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +23,14 @@ export class AuthService {
   }
 
   async signup(input: User.Create): Promise<User.Entity> {
-    return this.db.user.create({
+    const user = await this.db.user.findUnique({
+      where: { email: input.email },
+    });
+    if (user) {
+      throw new UnprocessableEntityException('Email address already in use.');
+    }
+
+    return await this.db.user.create({
       data: {
         ...input,
         password: hashSync(input.password, 10),
