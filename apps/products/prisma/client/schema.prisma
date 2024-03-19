@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String    @id @default(uuid())
+  name        String    @db.VarChar(255)
+  slug        String    @unique @db.VarChar(255)
+  sku         String    @unique @db.Char(12)
+  price       Float     @map("price")
+  salePrice   Float?    @map("sale_price")
+  description String?
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
+  updatedAt   DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
+
+  @@map("products")
+}
