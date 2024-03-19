@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/micro-store/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/micro-store/test/jest-e2e.json",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -27,11 +28,14 @@
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.3.0",
+    "@shopify/admin-api-client": "^0.2.8",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.6",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
     "joi": "^17.12.2",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
@@ -42,6 +46,9 @@
     "utility-types": "^3.11.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.4",
+    "@graphql-codegen/typescript-graphql-request": "^6.2.0",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",

@@ -1,0 +1,14 @@
+mutation ProductDeleteAsync($productId: ID!) {
+  productDeleteAsync(productId: $productId) {
+    deleteProductId
+    job {
+      done
+      id
+    }
+    userErrors {
+      code
+      field
+      message
+    }
+  }
+}

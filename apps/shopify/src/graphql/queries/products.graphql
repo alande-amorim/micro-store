@@ -1,0 +1,73 @@
+query GetProducts {
+  products(first: 10) {
+    edges {
+      cursor
+      node {
+        bodyHtml
+        createdAt
+        customProductType
+        defaultCursor
+        description
+        descriptionHtml
+        descriptionPlainSummary
+        giftCardTemplateSuffix
+        handle
+        hasOnlyDefaultVariant
+        hasOutOfStockVariants
+        id
+        isGiftCard
+        legacyResourceId
+        mediaCount
+        onlineStorePreviewUrl
+        onlineStoreUrl
+        productType
+        publishedAt
+        requiresSellingPlan
+        sellingPlanGroupCount
+        status
+        storefrontId
+        tags
+        templateSuffix
+        title
+        totalInventory
+        totalVariants
+        tracksInventory
+        updatedAt
+        vendor
+      }
+    }
+    nodes {
+      bodyHtml
+      createdAt
+      customProductType
+      defaultCursor
+      description
+      descriptionHtml
+      descriptionPlainSummary
+      giftCardTemplateSuffix
+      handle
+      hasOnlyDefaultVariant
+      hasOutOfStockVariants
+      id
+      isGiftCard
+      legacyResourceId
+      mediaCount
+      onlineStorePreviewUrl
+      onlineStoreUrl
+      productType
+      publishedAt
+      requiresSellingPlan
+      sellingPlanGroupCount
+      status
+      storefrontId
+      tags
+      templateSuffix
+      title
+      totalInventory
+      totalVariants
+      tracksInventory
+      updatedAt
+      vendor
+    }
+  }
+}

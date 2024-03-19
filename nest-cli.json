@@ -36,6 +36,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/products/tsconfig.app.json"
       }
+    },
+    "shopify": {
+      "type": "application",
+      "root": "apps/shopify",
+      "entryFile": "main",
+      "sourceRoot": "apps/shopify",
+      "compilerOptions": {
+        "tsConfigPath": "apps/shopify/tsconfig.app.json"
+      }
     }
   }
 }

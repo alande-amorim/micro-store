@@ -1,0 +1,39 @@
+query GetProductById($id: ID!) {
+  product(id: $id) {
+    availablePublicationCount
+    bodyHtml
+    createdAt
+    customProductType
+    defaultCursor
+    description
+    descriptionHtml
+    descriptionPlainSummary
+    giftCardTemplateSuffix
+    handle
+    hasOnlyDefaultVariant
+    hasOutOfStockVariants
+    id
+    isGiftCard
+    legacyResourceId
+    mediaCount
+    onlineStorePreviewUrl
+    onlineStoreUrl
+    productType
+    publicationCount
+    publishedAt
+    publishedOnCurrentChannel
+    publishedOnCurrentPublication
+    requiresSellingPlan
+    sellingPlanGroupCount
+    status
+    storefrontId
+    tags
+    templateSuffix
+    title
+    totalInventory
+    totalVariants
+    tracksInventory
+    updatedAt
+    vendor
+  }
+}
