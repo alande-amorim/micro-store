@@ -7,11 +7,12 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product } from '@app/common';
+import { JwtAuthGuard, Product } from '@app/common';
 
 @Controller('products')
 export class ProductsController {
@@ -29,11 +30,13 @@ export class ProductsController {
     return product;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() product: CreateProductDto): Promise<Product.Entity> {
     return this.service.create(product);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -42,6 +45,7 @@ export class ProductsController {
     return this.service.update(id, product);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   delete(@Param('id') id: string): Promise<boolean> {
     return this.service.delete(id);
