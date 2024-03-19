@@ -15,6 +15,10 @@ export class AuthService {
     private readonly conf: ConfigService,
   ) {}
 
+  getById(id: string): Promise<User.Entity> {
+    return this.db.user.findUnique({ where: { id } });
+  }
+
   async verifyPassword(email: string, password: string) {
     const user = await this.db.user.findUnique({ where: { email } });
     const isValid = await compare(password, user.password);
@@ -38,7 +42,7 @@ export class AuthService {
     });
   }
 
-  async signin(user: User.Entity, res: Response): Promise<string> {
+  signin(user: User.Entity, res: Response): string {
     const payload: TokenPayload = {
       userId: user.id,
     };
