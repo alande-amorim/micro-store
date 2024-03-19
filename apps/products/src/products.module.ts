@@ -3,6 +3,7 @@ import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
 import * as Joi from 'joi';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaService } from './prisma.service';
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import { ConfigModule } from '@nestjs/config';
     }),
   ],
   controllers: [ProductsController],
-  providers: [ProductsService],
+  providers: [PrismaService, ProductsService],
 })
 export class ProductsModule {}
