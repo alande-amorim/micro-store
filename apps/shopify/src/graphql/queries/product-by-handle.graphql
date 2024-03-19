@@ -1,0 +1,18 @@
+query GetProductByHandle($handle: String!) {
+  productByHandle(handle: $handle) {
+    id
+    title
+    handle
+    description
+    publishedAt
+    updatedAt
+    createdAt
+    variants(first: 1) {
+      nodes {
+        id
+        price
+        sku
+      }
+    }
+  }
+}

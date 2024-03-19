@@ -1,49 +1,39 @@
-import { Controller, Get } from '@nestjs/common';
-import { createAdminApiClient } from '@shopify/admin-api-client';
-import { GetProductsDocument, getSdk } from './graphql';
-import { GraphQLClient } from 'graphql-request';
-import { ConfigService } from '@nestjs/config';
-import { print } from 'graphql';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { ShopifyService } from './shopify.service';
+import { Product } from '@app/common';
 
 @Controller()
 export class ShopifyController {
-  constructor(private conf: ConfigService) {}
+  constructor(private service: ShopifyService) {}
 
-  @Get('bye')
-  async getBye(): Promise<unknown> {
-    const client = createAdminApiClient({
-      storeDomain: this.conf.get('SHOPIFY_STORE_URL'),
-      apiVersion: this.conf.get('SHOPIFY_API_VERSION'),
-      accessToken: this.conf.get('SHOPIFY_ACCESS_TOKEN'),
-    });
-
-    const { data, errors, extensions } = await client.request(
-      print(GetProductsDocument),
-      {
-        variables: {
-          id: 'gid://shopify/Product/7608002183224',
-        },
-      },
-    );
-    console.log({ data, errors, extensions });
-
-    return data;
+  @MessagePattern('listProducts')
+  async listProducts(): Promise<unknown> {
+    return this.service.listProducts();
   }
 
-  @Get('hello')
-  async getHello(): Promise<unknown> {
-    const apiUrl = `${this.conf.get('SHOPIFY_STORE_URL')}/admin/api/${this.conf.get('SHOPIFY_API_VERSION')}/graphql.json`;
+  @MessagePattern('getProduct')
+  async getProduct(@Payload() data: Product.Entity): Promise<unknown> {
+    return this.service.getProduct(data);
+  }
 
-    const client = new GraphQLClient(apiUrl, {
-      headers: {
-        'X-Shopify-Access-Token': this.conf.get('SHOPIFY_ACCESS_TOKEN'),
-      },
-    });
+  @MessagePattern('createPoduct')
+  async createProduct(@Payload() data: Product.Entity): Promise<unknown> {
+    const response = await this.service.createProduct(data);
+    console.log(response);
+    return response;
+  }
 
-    const sdk = getSdk(client);
-    const { data, extensions, headers, errors } = await sdk.GetProducts();
-    console.log({ data, extensions, headers, errors });
+  @MessagePattern('updatePoduct')
+  async updateProduct(@Payload() data: Product.Entity): Promise<unknown> {
+    const response = await this.service.createProduct(data);
+    console.log(response);
+    return response;
+  }
 
-    return data;
+  async deleteProduct(@Payload() data: Product.Entity): Promise<unknown> {
+    const response = await this.service.createProduct(data);
+    console.log(response);
+    return response;
   }
 }

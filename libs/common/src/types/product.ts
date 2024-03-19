@@ -15,4 +15,14 @@ export namespace Product {
   export type Entity = DbEntity & Required<Model, 'slug'>;
   export type Create = Optional<Model, 'slug'>;
   export type Update = Optional<Model>;
+
+  export type External = {
+    productId: string;
+    variantId: string;
+    title: string;
+    handle: string;
+    sku: string;
+    price: number;
+    description: string;
+  };
 }

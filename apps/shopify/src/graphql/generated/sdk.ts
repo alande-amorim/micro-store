@@ -49928,7 +49928,7 @@ export type ProductCreateMutationVariables = Exact<{
 }>;
 
 
-export type ProductCreateMutation = { __typename?: 'Mutation', productCreate?: { __typename?: 'ProductCreatePayload', product?: { __typename?: 'Product', availablePublicationCount: number, bodyHtml?: string | null, createdAt: any, customProductType?: string | null, defaultCursor: string, description: string, descriptionHtml: any, descriptionPlainSummary: string, giftCardTemplateSuffix?: string | null, handle: string, hasOnlyDefaultVariant: boolean, hasOutOfStockVariants: boolean, id: string, isGiftCard: boolean, legacyResourceId: any, mediaCount: number, onlineStorePreviewUrl?: any | null, onlineStoreUrl?: any | null, productType: string, publicationCount: number, publishedAt?: any | null, publishedOnCurrentChannel: boolean, publishedOnCurrentPublication: boolean, requiresSellingPlan: boolean, sellingPlanGroupCount: number, status: ProductStatus, storefrontId: any, tags: Array<string>, templateSuffix?: string | null, title: string, totalInventory: number, totalVariants: number, tracksInventory: boolean, updatedAt: any, vendor: string } | null, userErrors: Array<{ __typename?: 'UserError', field?: Array<string> | null, message: string }> } | null };
+export type ProductCreateMutation = { __typename?: 'Mutation', productCreate?: { __typename?: 'ProductCreatePayload', product?: { __typename?: 'Product', id: string, title: string, handle: string, description: string, descriptionHtml: any, status: ProductStatus, updatedAt: any, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', price: any }> } } | null, userErrors: Array<{ __typename?: 'UserError', field?: Array<string> | null, message: string }> } | null };
 
 export type ProductDeleteAsyncMutationVariables = Exact<{
   productId: Scalars['ID']['input'];
@@ -49949,14 +49949,14 @@ export type ProductUpdateMutationVariables = Exact<{
 }>;
 
 
-export type ProductUpdateMutation = { __typename?: 'Mutation', productUpdate?: { __typename?: 'ProductUpdatePayload', product?: { __typename?: 'Product', availablePublicationCount: number, bodyHtml?: string | null, createdAt: any, customProductType?: string | null, defaultCursor: string, description: string, descriptionHtml: any, descriptionPlainSummary: string, giftCardTemplateSuffix?: string | null, handle: string, hasOnlyDefaultVariant: boolean, hasOutOfStockVariants: boolean, id: string, isGiftCard: boolean, legacyResourceId: any, mediaCount: number, onlineStorePreviewUrl?: any | null, onlineStoreUrl?: any | null, productType: string, publicationCount: number, publishedAt?: any | null, publishedOnCurrentChannel: boolean, publishedOnCurrentPublication: boolean, requiresSellingPlan: boolean, sellingPlanGroupCount: number, status: ProductStatus, storefrontId: any, tags: Array<string>, templateSuffix?: string | null, title: string, totalInventory: number, totalVariants: number, tracksInventory: boolean, updatedAt: any, vendor: string } | null, userErrors: Array<{ __typename?: 'UserError', field?: Array<string> | null, message: string }> } | null };
+export type ProductUpdateMutation = { __typename?: 'Mutation', productCreate?: { __typename?: 'ProductCreatePayload', product?: { __typename?: 'Product', id: string, title: string, handle: string, description: string, descriptionHtml: any, status: ProductStatus, updatedAt: any, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', price: any }> } } | null, userErrors: Array<{ __typename?: 'UserError', field?: Array<string> | null, message: string }> } | null };
 
-export type GetProductByIdQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
+export type GetProductByHandleQueryVariables = Exact<{
+  handle: Scalars['String']['input'];
 }>;
 
 
-export type GetProductByIdQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', availablePublicationCount: number, bodyHtml?: string | null, createdAt: any, customProductType?: string | null, defaultCursor: string, description: string, descriptionHtml: any, descriptionPlainSummary: string, giftCardTemplateSuffix?: string | null, handle: string, hasOnlyDefaultVariant: boolean, hasOutOfStockVariants: boolean, id: string, isGiftCard: boolean, legacyResourceId: any, mediaCount: number, onlineStorePreviewUrl?: any | null, onlineStoreUrl?: any | null, productType: string, publicationCount: number, publishedAt?: any | null, publishedOnCurrentChannel: boolean, publishedOnCurrentPublication: boolean, requiresSellingPlan: boolean, sellingPlanGroupCount: number, status: ProductStatus, storefrontId: any, tags: Array<string>, templateSuffix?: string | null, title: string, totalInventory: number, totalVariants: number, tracksInventory: boolean, updatedAt: any, vendor: string } | null };
+export type GetProductByHandleQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', id: string, title: string, handle: string, description: string, publishedAt?: any | null, updatedAt: any, createdAt: any, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', id: string, price: any, sku?: string | null }> } } | null };
 
 export type GetProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -49968,41 +49968,18 @@ export const ProductCreateDocument = gql`
     mutation ProductCreate($input: ProductInput!) {
   productCreate(input: $input) {
     product {
-      availablePublicationCount
-      bodyHtml
-      createdAt
-      customProductType
-      defaultCursor
+      id
+      title
+      handle
       description
       descriptionHtml
-      descriptionPlainSummary
-      giftCardTemplateSuffix
-      handle
-      hasOnlyDefaultVariant
-      hasOutOfStockVariants
-      id
-      isGiftCard
-      legacyResourceId
-      mediaCount
-      onlineStorePreviewUrl
-      onlineStoreUrl
-      productType
-      publicationCount
-      publishedAt
-      publishedOnCurrentChannel
-      publishedOnCurrentPublication
-      requiresSellingPlan
-      sellingPlanGroupCount
       status
-      storefrontId
-      tags
-      templateSuffix
-      title
-      totalInventory
-      totalVariants
-      tracksInventory
       updatedAt
-      vendor
+      variants(first: 1) {
+        nodes {
+          price
+        }
+      }
     }
     userErrors {
       field
@@ -50040,43 +50017,20 @@ export const ProductDeleteDocument = gql`
     `;
 export const ProductUpdateDocument = gql`
     mutation ProductUpdate($input: ProductInput!) {
-  productUpdate(input: $input) {
+  productCreate(input: $input) {
     product {
-      availablePublicationCount
-      bodyHtml
-      createdAt
-      customProductType
-      defaultCursor
+      id
+      title
+      handle
       description
       descriptionHtml
-      descriptionPlainSummary
-      giftCardTemplateSuffix
-      handle
-      hasOnlyDefaultVariant
-      hasOutOfStockVariants
-      id
-      isGiftCard
-      legacyResourceId
-      mediaCount
-      onlineStorePreviewUrl
-      onlineStoreUrl
-      productType
-      publicationCount
-      publishedAt
-      publishedOnCurrentChannel
-      publishedOnCurrentPublication
-      requiresSellingPlan
-      sellingPlanGroupCount
       status
-      storefrontId
-      tags
-      templateSuffix
-      title
-      totalInventory
-      totalVariants
-      tracksInventory
       updatedAt
-      vendor
+      variants(first: 1) {
+        nodes {
+          price
+        }
+      }
     }
     userErrors {
       field
@@ -50085,44 +50039,23 @@ export const ProductUpdateDocument = gql`
   }
 }
     `;
-export const GetProductByIdDocument = gql`
-    query GetProductById($id: ID!) {
-  product(id: $id) {
-    availablePublicationCount
-    bodyHtml
-    createdAt
-    customProductType
-    defaultCursor
-    description
-    descriptionHtml
-    descriptionPlainSummary
-    giftCardTemplateSuffix
-    handle
-    hasOnlyDefaultVariant
-    hasOutOfStockVariants
+export const GetProductByHandleDocument = gql`
+    query GetProductByHandle($handle: String!) {
+  productByHandle(handle: $handle) {
     id
-    isGiftCard
-    legacyResourceId
-    mediaCount
-    onlineStorePreviewUrl
-    onlineStoreUrl
-    productType
-    publicationCount
-    publishedAt
-    publishedOnCurrentChannel
-    publishedOnCurrentPublication
-    requiresSellingPlan
-    sellingPlanGroupCount
-    status
-    storefrontId
-    tags
-    templateSuffix
     title
-    totalInventory
-    totalVariants
-    tracksInventory
+    handle
+    description
+    publishedAt
     updatedAt
-    vendor
+    createdAt
+    variants(first: 1) {
+      nodes {
+        id
+        price
+        sku
+      }
+    }
   }
 }
     `;
@@ -50210,7 +50143,7 @@ const ProductCreateDocumentString = print(ProductCreateDocument);
 const ProductDeleteAsyncDocumentString = print(ProductDeleteAsyncDocument);
 const ProductDeleteDocumentString = print(ProductDeleteDocument);
 const ProductUpdateDocumentString = print(ProductUpdateDocument);
-const GetProductByIdDocumentString = print(GetProductByIdDocument);
+const GetProductByHandleDocumentString = print(GetProductByHandleDocument);
 const GetProductsDocumentString = print(GetProductsDocument);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
@@ -50226,8 +50159,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     ProductUpdate(variables: ProductUpdateMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ProductUpdateMutation; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<ProductUpdateMutation>(ProductUpdateDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ProductUpdate', 'mutation', variables);
     },
-    GetProductById(variables: GetProductByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetProductByIdQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
-        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetProductByIdQuery>(GetProductByIdDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductById', 'query', variables);
+    GetProductByHandle(variables: GetProductByHandleQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetProductByHandleQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetProductByHandleQuery>(GetProductByHandleDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductByHandle', 'query', variables);
     },
     GetProducts(variables?: GetProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetProductsQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetProductsQuery>(GetProductsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProducts', 'query', variables);

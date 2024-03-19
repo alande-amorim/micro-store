@@ -1,41 +1,18 @@
 mutation ProductCreate($input: ProductInput!) {
   productCreate(input: $input) {
     product {
-      availablePublicationCount
-      bodyHtml
-      createdAt
-      customProductType
-      defaultCursor
+      id
+      title
+      handle
       description
       descriptionHtml
-      descriptionPlainSummary
-      giftCardTemplateSuffix
-      handle
-      hasOnlyDefaultVariant
-      hasOutOfStockVariants
-      id
-      isGiftCard
-      legacyResourceId
-      mediaCount
-      onlineStorePreviewUrl
-      onlineStoreUrl
-      productType
-      publicationCount
-      publishedAt
-      publishedOnCurrentChannel
-      publishedOnCurrentPublication
-      requiresSellingPlan
-      sellingPlanGroupCount
       status
-      storefrontId
-      tags
-      templateSuffix
-      title
-      totalInventory
-      totalVariants
-      tracksInventory
       updatedAt
-      vendor
+      variants(first: 1) {
+        nodes {
+          price
+        }
+      }
     }
     userErrors {
       field
