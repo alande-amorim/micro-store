@@ -3,8 +3,7 @@ import { SignupDto } from './dto/signup.dto';
 import { AuthService } from './auth.service';
 import { SigninDto } from './dto/signin.dto';
 import { Response } from 'express';
-import { User } from '@app/common';
-import { AuthUser } from './auth-user.decorator';
+import { AuthUser, User } from '@app/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -37,7 +36,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @MessagePattern('authenticate')
-  async authenticate(@Payload() payload: any) {
+  async authenticate(@Payload() payload) {
     return payload.user;
   }
 }
