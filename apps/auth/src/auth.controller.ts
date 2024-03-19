@@ -7,6 +7,7 @@ import { User } from '@app/common';
 import { AuthUser } from './auth-user.decorator';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller('auth')
 export class AuthController {
@@ -32,5 +33,11 @@ export class AuthController {
   @Get('me')
   getMe(@AuthUser() user: User.Entity): User.Entity {
     return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @MessagePattern('authenticate')
+  async authenticate(@Payload() payload: any) {
+    return payload.user;
   }
 }
