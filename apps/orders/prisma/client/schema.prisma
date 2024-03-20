@@ -15,59 +15,56 @@ enum AddressType {
 }
 
 model Customer {
-  id            String  @id @default(uuid())
-  userId        String  @unique @map("user_id")
-  addressId     String  @unique @map("address_id")
-  email         String  @map("email")
-  createdAt     String  @map("created_at")
-  updatedAt     String  @map("updated_at")
-  firstName     String  @map("first_name")
-  lastName      String  @map("last_name")
-  state         String  @map("state")
-  verifiedEmail Boolean @map("verified_email")
-  phone         String  @map("phone")
-  currency      String  @map("currency")
+  id            String    @id @default(uuid())
+  email         String    @unique @map("email")
+  firstName     String    @map("first_name")
+  lastName      String    @map("last_name")
+  state         String    @map("state")
+  verifiedEmail Boolean   @map("verified_email")
+  phone         String?   @map("phone")
+  currency      String?   @map("currency")
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
+  updatedAt     DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
 
-  address Address @relation(fields: [addressId], references: [id])
   Order   Order[]
+  Address Address[]
 
   @@map("customers")
 }
 
 model Address {
-  id           String @id @default(uuid())
-  firstName    String @map("first_name")
-  address1     String @map("address1")
-  phone        String @map("phone")
-  city         String @map("city")
-  zip          String @map("zip")
-  province     String @map("province")
-  country      String @map("country")
-  lastName     String @map("last_name")
-  address2     String @map("address2")
-  company      String @map("company")
-  latitude     String @map("latitude")
-  longitude    String @map("longitude")
-  name         String @map("name")
-  countryCode  String @map("country_code")
-  provinceCode String @map("province_code")
+  id           String    @id @default(uuid())
+  firstName    String    @map("first_name")
+  address1     String    @map("address1")
+  phone        String    @map("phone")
+  city         String    @map("city")
+  zip          String    @map("zip")
+  province     String    @map("province")
+  country      String    @map("country")
+  lastName     String    @map("last_name")
+  company      String    @map("company")
+  name         String    @map("name")
+  countryCode  String    @map("country_code")
+  provinceCode String    @map("province_code")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
+  updatedAt    DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
 
-  type     AddressType @default(SHIPPING) @map("address_type")
-  customer Customer?
-  Order    Order[]
+  addressType AddressType @default(SHIPPING) @map("address_type")
+  customer    Customer?   @relation(fields: [customerId], references: [id])
+  Order       Order[]
+  customerId  String?
 
-  @@map("shipping_addresses")
+  @@map("addresses")
 }
 
 model OrderItem {
   id             String   @id @default(uuid())
   orderId        String   @map("order_id")
   externalLineId String   @map("external_line_gid")
-  name           String   @map("name")
+  title          String   @map("title")
   sku            String   @map("sku")
   quantity       Int      @map("quantity")
   price          Float    @map("price")
-  currency       String   @map("currency")
   createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(0)
   updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz(0)
 
@@ -77,18 +74,18 @@ model OrderItem {
 }
 
 model Order {
-  id          String    @id @default(uuid())
-  externalGid String    @unique @map("external_gid") @db.VarChar(64)
-  customerId  String    @map("customer_id")
-  totalAmount Float     @map("total_amount")
-  currency    String    @map("currency")
-  addressId   String    @map("address_id")
-  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
-  updatedAt   DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
+  id                String    @id @default(uuid())
+  externalGid       String    @unique @map("external_gid") @db.VarChar(64)
+  customerId        String    @map("customer_id")
+  totalAmount       Float     @map("total_amount")
+  currency          String    @map("currency")
+  shippingAddressId String    @map("address_id")
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
+  updatedAt         DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
 
-  customer Customer    @relation(fields: [customerId], references: [id])
-  address  Address     @relation(fields: [addressId], references: [id])
-  items    OrderItem[]
+  customer        Customer    @relation(fields: [customerId], references: [id])
+  shippingAddress Address     @relation(fields: [shippingAddressId], references: [id])
+  items           OrderItem[]
 
   @@map("orders")
 }

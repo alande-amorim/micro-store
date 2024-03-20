@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ORDERS_SERVICE, Product } from '@app/common';
+import { ORDERS_SERVICE, Product, Shopify } from '@app/common';
 import { GraphqlProductsRepository } from './repositories/graphql-products.repository';
-import { WebhookOrderCreatedDto } from './dto/webhook-order-created.dto';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
@@ -31,7 +30,7 @@ export class ShopifyService {
     return await this.repo.delete(data);
   }
 
-  handleWebhook(payload: WebhookOrderCreatedDto) {
-    return this.ordersClient.send('webhook', payload);
+  handleWebhook(data: Shopify.Order.Created) {
+    return this.ordersClient.send('webhook', data);
   }
 }

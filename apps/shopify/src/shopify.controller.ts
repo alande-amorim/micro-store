@@ -7,15 +7,14 @@ import {
 } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ShopifyService } from './shopify.service';
-import { Product } from '@app/common';
-import { WebhookOrderCreatedDto } from './dto/webhook-order-created.dto';
+import { Product, Shopify } from '@app/common';
 
 @Controller()
 export class ShopifyController {
   constructor(private service: ShopifyService) {}
 
   @Post('webhook')
-  webhook(@Body() payload: WebhookOrderCreatedDto) {
+  webhook(@Body() payload: Shopify.Order.Created) {
     return this.service.handleWebhook(payload);
   }
 

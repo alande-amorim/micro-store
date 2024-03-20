@@ -121,17 +121,15 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.CustomerScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  addressId: 'addressId',
   email: 'email',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   firstName: 'firstName',
   lastName: 'lastName',
   state: 'state',
   verifiedEmail: 'verifiedEmail',
   phone: 'phone',
-  currency: 'currency'
+  currency: 'currency',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.AddressScalarFieldEnum = {
@@ -144,25 +142,24 @@ exports.Prisma.AddressScalarFieldEnum = {
   province: 'province',
   country: 'country',
   lastName: 'lastName',
-  address2: 'address2',
   company: 'company',
-  latitude: 'latitude',
-  longitude: 'longitude',
   name: 'name',
   countryCode: 'countryCode',
   provinceCode: 'provinceCode',
-  type: 'type'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  addressType: 'addressType',
+  customerId: 'customerId'
 };
 
 exports.Prisma.OrderItemScalarFieldEnum = {
   id: 'id',
   orderId: 'orderId',
   externalLineId: 'externalLineId',
-  name: 'name',
+  title: 'title',
   sku: 'sku',
   quantity: 'quantity',
   price: 'price',
-  currency: 'currency',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -173,7 +170,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   customerId: 'customerId',
   totalAmount: 'totalAmount',
   currency: 'currency',
-  addressId: 'addressId',
+  shippingAddressId: 'shippingAddressId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

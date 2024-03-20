@@ -1,15 +1,8 @@
-import {
-  Body,
-  Controller,
-  Get,
-  NotFoundException,
-  Param,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { SyncOrderDto } from './dto/sync-order.dto';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { Order, Shopify } from '@app/common';
 
 @Controller()
 export class OrdersController {
@@ -28,8 +21,10 @@ export class OrdersController {
   // }
 
   @MessagePattern('webhook')
-  async handleWebhook(@Payload() data: SyncOrderDto) {
-    await this.service.handleWebhook(data);
-    return 'ok';
+  async handleWebhook(
+    @Payload() data: Shopify.Order.Created,
+  ): Promise<Order.Entity> {
+    const dto = new CreateOrderDto(data);
+    return this.service.handleWebhook(dto);
   }
 }

@@ -16,20 +16,18 @@ enum AddressType {
 
 model Customer {
   id            String    @id @default(uuid())
-  userId        String    @unique @map("user_id")
-  addressId     String    @unique @map("address_id")
-  email         String    @map("email")
+  email         String    @unique @map("email")
   firstName     String    @map("first_name")
   lastName      String    @map("last_name")
   state         String    @map("state")
   verifiedEmail Boolean   @map("verified_email")
-  phone         String    @map("phone")
-  currency      String    @map("currency")
+  phone         String?   @map("phone")
+  currency      String?   @map("currency")
   createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
   updatedAt     DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
 
-  address Address @relation(fields: [addressId], references: [id])
   Order   Order[]
+  Address Address[]
 
   @@map("customers")
 }
@@ -51,22 +49,22 @@ model Address {
   createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
   updatedAt    DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
 
-  type     AddressType @default(SHIPPING) @map("address_type")
-  customer Customer?
-  Order    Order[]
+  addressType AddressType @default(SHIPPING) @map("address_type")
+  customer    Customer?   @relation(fields: [customerId], references: [id])
+  Order       Order[]
+  customerId  String?
 
-  @@map("shipping_addresses")
+  @@map("addresses")
 }
 
 model OrderItem {
   id             String   @id @default(uuid())
   orderId        String   @map("order_id")
   externalLineId String   @map("external_line_gid")
-  name           String   @map("name")
+  title          String   @map("title")
   sku            String   @map("sku")
   quantity       Int      @map("quantity")
   price          Float    @map("price")
-  currency       String   @map("currency")
   createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(0)
   updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz(0)
 

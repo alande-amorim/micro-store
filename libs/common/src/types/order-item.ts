@@ -5,12 +5,19 @@ export namespace OrderItem {
   export type Model = {
     orderId: string;
     externalLineId: string;
-    name: string;
+    title: string;
     sku: string;
     quantity: number;
     price: number;
-    currency: string;
   };
 
   export type Entity = Model & DbEntity;
+
+  export type Create = {
+    externalLineId: string;
+    title: string;
+    sku: string;
+    quantity: number;
+    price: number;
+  };
 }

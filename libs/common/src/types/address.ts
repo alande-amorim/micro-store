@@ -15,7 +15,7 @@ export namespace Address {
     name: string;
     countryCode: string;
     provinceCode: string;
-    address_type: AddressType;
+    addressType?: AddressType;
   };
 
   export type Entity = Model & DbEntity;
@@ -26,4 +26,6 @@ export namespace Address {
     DEFAULT: 'DEFAULT',
   } as const;
   export type AddressType = (typeof AddressType)[keyof typeof AddressType];
+
+  export type Create = Model;
 }

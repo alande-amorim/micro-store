@@ -7,7 +7,6 @@ import { OrderItem } from './order-item';
 export namespace Order {
   export type Model = {
     externalGid: string;
-    customerId: string;
     totalAmount: number;
     currency: string;
   };
@@ -24,7 +23,11 @@ export namespace Order {
   };
 
   export type Entity = DbEntity & Model;
-  export type Create = Model;
+  export type Create = Model & {
+    customer: Customer.Create;
+    shippingAddress: Address.Create;
+    items: OrderItem.Create[];
+  };
   export type Update = Model;
 
   export type External = Model;

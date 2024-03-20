@@ -3,6 +3,10 @@ import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { CustomersRepository } from './repositories/customers.repository';
+import { PrismaService } from './prisma.service';
+import { AddressesRepository } from './repositories/addresses.repository';
+import { OrdersRepository } from './repositories/orders.repository';
 
 @Module({
   imports: [
@@ -16,6 +20,12 @@ import * as Joi from 'joi';
     }),
   ],
   controllers: [OrdersController],
-  providers: [OrdersService],
+  providers: [
+    OrdersService,
+    PrismaService,
+    AddressesRepository,
+    CustomersRepository,
+    OrdersRepository,
+  ],
 })
 export class OrdersModule {}

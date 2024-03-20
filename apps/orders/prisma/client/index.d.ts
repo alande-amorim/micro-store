@@ -1131,10 +1131,12 @@ export namespace Prisma {
 
   export type CustomerCountOutputType = {
     Order: number
+    Address: number
   }
 
   export type CustomerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Order?: boolean | CustomerCountOutputTypeCountOrderArgs
+    Address?: boolean | CustomerCountOutputTypeCountAddressArgs
   }
 
   // Custom InputTypes
@@ -1155,6 +1157,14 @@ export namespace Prisma {
    */
   export type CustomerCountOutputTypeCountOrderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OrderWhereInput
+  }
+
+
+  /**
+   * CustomerCountOutputType without action
+   */
+  export type CustomerCountOutputTypeCountAddressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AddressWhereInput
   }
 
 
@@ -1243,94 +1253,82 @@ export namespace Prisma {
 
   export type CustomerMinAggregateOutputType = {
     id: string | null
-    userId: string | null
-    addressId: string | null
     email: string | null
-    createdAt: string | null
-    updatedAt: string | null
     firstName: string | null
     lastName: string | null
     state: string | null
     verifiedEmail: boolean | null
     phone: string | null
     currency: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type CustomerMaxAggregateOutputType = {
     id: string | null
-    userId: string | null
-    addressId: string | null
     email: string | null
-    createdAt: string | null
-    updatedAt: string | null
     firstName: string | null
     lastName: string | null
     state: string | null
     verifiedEmail: boolean | null
     phone: string | null
     currency: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type CustomerCountAggregateOutputType = {
     id: number
-    userId: number
-    addressId: number
     email: number
-    createdAt: number
-    updatedAt: number
     firstName: number
     lastName: number
     state: number
     verifiedEmail: number
     phone: number
     currency: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
   export type CustomerMinAggregateInputType = {
     id?: true
-    userId?: true
-    addressId?: true
     email?: true
-    createdAt?: true
-    updatedAt?: true
     firstName?: true
     lastName?: true
     state?: true
     verifiedEmail?: true
     phone?: true
     currency?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type CustomerMaxAggregateInputType = {
     id?: true
-    userId?: true
-    addressId?: true
     email?: true
-    createdAt?: true
-    updatedAt?: true
     firstName?: true
     lastName?: true
     state?: true
     verifiedEmail?: true
     phone?: true
     currency?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type CustomerCountAggregateInputType = {
     id?: true
-    userId?: true
-    addressId?: true
     email?: true
-    createdAt?: true
-    updatedAt?: true
     firstName?: true
     lastName?: true
     state?: true
     verifiedEmail?: true
     phone?: true
     currency?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -1408,17 +1406,15 @@ export namespace Prisma {
 
   export type CustomerGroupByOutputType = {
     id: string
-    userId: string
-    addressId: string
     email: string
-    createdAt: string
-    updatedAt: string
     firstName: string
     lastName: string
     state: string
     verifiedEmail: boolean
-    phone: string
-    currency: string
+    phone: string | null
+    currency: string | null
+    createdAt: Date
+    updatedAt: Date | null
     _count: CustomerCountAggregateOutputType | null
     _min: CustomerMinAggregateOutputType | null
     _max: CustomerMaxAggregateOutputType | null
@@ -1440,40 +1436,36 @@ export namespace Prisma {
 
   export type CustomerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
-    addressId?: boolean
     email?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
     firstName?: boolean
     lastName?: boolean
     state?: boolean
     verifiedEmail?: boolean
     phone?: boolean
     currency?: boolean
-    address?: boolean | AddressDefaultArgs<ExtArgs>
+    createdAt?: boolean
+    updatedAt?: boolean
     Order?: boolean | Customer$OrderArgs<ExtArgs>
+    Address?: boolean | Customer$AddressArgs<ExtArgs>
     _count?: boolean | CustomerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["customer"]>
 
   export type CustomerSelectScalar = {
     id?: boolean
-    userId?: boolean
-    addressId?: boolean
     email?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
     firstName?: boolean
     lastName?: boolean
     state?: boolean
     verifiedEmail?: boolean
     phone?: boolean
     currency?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
   export type CustomerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    address?: boolean | AddressDefaultArgs<ExtArgs>
     Order?: boolean | Customer$OrderArgs<ExtArgs>
+    Address?: boolean | Customer$AddressArgs<ExtArgs>
     _count?: boolean | CustomerCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1481,22 +1473,20 @@ export namespace Prisma {
   export type $CustomerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Customer"
     objects: {
-      address: Prisma.$AddressPayload<ExtArgs>
       Order: Prisma.$OrderPayload<ExtArgs>[]
+      Address: Prisma.$AddressPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
-      addressId: string
       email: string
-      createdAt: string
-      updatedAt: string
       firstName: string
       lastName: string
       state: string
       verifiedEmail: boolean
-      phone: string
-      currency: string
+      phone: string | null
+      currency: string | null
+      createdAt: Date
+      updatedAt: Date | null
     }, ExtArgs["result"]["customer"]>
     composites: {}
   }
@@ -1862,9 +1852,9 @@ export namespace Prisma {
   export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
-    address<T extends AddressDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AddressDefaultArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
-
     Order<T extends Customer$OrderArgs<ExtArgs> = {}>(args?: Subset<T, Customer$OrderArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    Address<T extends Customer$AddressArgs<ExtArgs> = {}>(args?: Subset<T, Customer$AddressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1895,17 +1885,15 @@ export namespace Prisma {
    */ 
   interface CustomerFieldRefs {
     readonly id: FieldRef<"Customer", 'String'>
-    readonly userId: FieldRef<"Customer", 'String'>
-    readonly addressId: FieldRef<"Customer", 'String'>
     readonly email: FieldRef<"Customer", 'String'>
-    readonly createdAt: FieldRef<"Customer", 'String'>
-    readonly updatedAt: FieldRef<"Customer", 'String'>
     readonly firstName: FieldRef<"Customer", 'String'>
     readonly lastName: FieldRef<"Customer", 'String'>
     readonly state: FieldRef<"Customer", 'String'>
     readonly verifiedEmail: FieldRef<"Customer", 'Boolean'>
     readonly phone: FieldRef<"Customer", 'String'>
     readonly currency: FieldRef<"Customer", 'String'>
+    readonly createdAt: FieldRef<"Customer", 'DateTime'>
+    readonly updatedAt: FieldRef<"Customer", 'DateTime'>
   }
     
 
@@ -2239,6 +2227,27 @@ export namespace Prisma {
 
 
   /**
+   * Customer.Address
+   */
+  export type Customer$AddressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Address
+     */
+    select?: AddressSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AddressInclude<ExtArgs> | null
+    where?: AddressWhereInput
+    orderBy?: AddressOrderByWithRelationInput | AddressOrderByWithRelationInput[]
+    cursor?: AddressWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AddressScalarFieldEnum | AddressScalarFieldEnum[]
+  }
+
+
+  /**
    * Customer without action
    */
   export type CustomerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2274,14 +2283,14 @@ export namespace Prisma {
     province: string | null
     country: string | null
     lastName: string | null
-    address2: string | null
     company: string | null
-    latitude: string | null
-    longitude: string | null
     name: string | null
     countryCode: string | null
     provinceCode: string | null
-    type: $Enums.AddressType | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    addressType: $Enums.AddressType | null
+    customerId: string | null
   }
 
   export type AddressMaxAggregateOutputType = {
@@ -2294,14 +2303,14 @@ export namespace Prisma {
     province: string | null
     country: string | null
     lastName: string | null
-    address2: string | null
     company: string | null
-    latitude: string | null
-    longitude: string | null
     name: string | null
     countryCode: string | null
     provinceCode: string | null
-    type: $Enums.AddressType | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    addressType: $Enums.AddressType | null
+    customerId: string | null
   }
 
   export type AddressCountAggregateOutputType = {
@@ -2314,14 +2323,14 @@ export namespace Prisma {
     province: number
     country: number
     lastName: number
-    address2: number
     company: number
-    latitude: number
-    longitude: number
     name: number
     countryCode: number
     provinceCode: number
-    type: number
+    createdAt: number
+    updatedAt: number
+    addressType: number
+    customerId: number
     _all: number
   }
 
@@ -2336,14 +2345,14 @@ export namespace Prisma {
     province?: true
     country?: true
     lastName?: true
-    address2?: true
     company?: true
-    latitude?: true
-    longitude?: true
     name?: true
     countryCode?: true
     provinceCode?: true
-    type?: true
+    createdAt?: true
+    updatedAt?: true
+    addressType?: true
+    customerId?: true
   }
 
   export type AddressMaxAggregateInputType = {
@@ -2356,14 +2365,14 @@ export namespace Prisma {
     province?: true
     country?: true
     lastName?: true
-    address2?: true
     company?: true
-    latitude?: true
-    longitude?: true
     name?: true
     countryCode?: true
     provinceCode?: true
-    type?: true
+    createdAt?: true
+    updatedAt?: true
+    addressType?: true
+    customerId?: true
   }
 
   export type AddressCountAggregateInputType = {
@@ -2376,14 +2385,14 @@ export namespace Prisma {
     province?: true
     country?: true
     lastName?: true
-    address2?: true
     company?: true
-    latitude?: true
-    longitude?: true
     name?: true
     countryCode?: true
     provinceCode?: true
-    type?: true
+    createdAt?: true
+    updatedAt?: true
+    addressType?: true
+    customerId?: true
     _all?: true
   }
 
@@ -2469,14 +2478,14 @@ export namespace Prisma {
     province: string
     country: string
     lastName: string
-    address2: string
     company: string
-    latitude: string
-    longitude: string
     name: string
     countryCode: string
     provinceCode: string
-    type: $Enums.AddressType
+    createdAt: Date
+    updatedAt: Date | null
+    addressType: $Enums.AddressType
+    customerId: string | null
     _count: AddressCountAggregateOutputType | null
     _min: AddressMinAggregateOutputType | null
     _max: AddressMaxAggregateOutputType | null
@@ -2506,14 +2515,14 @@ export namespace Prisma {
     province?: boolean
     country?: boolean
     lastName?: boolean
-    address2?: boolean
     company?: boolean
-    latitude?: boolean
-    longitude?: boolean
     name?: boolean
     countryCode?: boolean
     provinceCode?: boolean
-    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    addressType?: boolean
+    customerId?: boolean
     customer?: boolean | Address$customerArgs<ExtArgs>
     Order?: boolean | Address$OrderArgs<ExtArgs>
     _count?: boolean | AddressCountOutputTypeDefaultArgs<ExtArgs>
@@ -2529,14 +2538,14 @@ export namespace Prisma {
     province?: boolean
     country?: boolean
     lastName?: boolean
-    address2?: boolean
     company?: boolean
-    latitude?: boolean
-    longitude?: boolean
     name?: boolean
     countryCode?: boolean
     provinceCode?: boolean
-    type?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    addressType?: boolean
+    customerId?: boolean
   }
 
   export type AddressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2562,14 +2571,14 @@ export namespace Prisma {
       province: string
       country: string
       lastName: string
-      address2: string
       company: string
-      latitude: string
-      longitude: string
       name: string
       countryCode: string
       provinceCode: string
-      type: $Enums.AddressType
+      createdAt: Date
+      updatedAt: Date | null
+      addressType: $Enums.AddressType
+      customerId: string | null
     }, ExtArgs["result"]["address"]>
     composites: {}
   }
@@ -2976,14 +2985,14 @@ export namespace Prisma {
     readonly province: FieldRef<"Address", 'String'>
     readonly country: FieldRef<"Address", 'String'>
     readonly lastName: FieldRef<"Address", 'String'>
-    readonly address2: FieldRef<"Address", 'String'>
     readonly company: FieldRef<"Address", 'String'>
-    readonly latitude: FieldRef<"Address", 'String'>
-    readonly longitude: FieldRef<"Address", 'String'>
     readonly name: FieldRef<"Address", 'String'>
     readonly countryCode: FieldRef<"Address", 'String'>
     readonly provinceCode: FieldRef<"Address", 'String'>
-    readonly type: FieldRef<"Address", 'AddressType'>
+    readonly createdAt: FieldRef<"Address", 'DateTime'>
+    readonly updatedAt: FieldRef<"Address", 'DateTime'>
+    readonly addressType: FieldRef<"Address", 'AddressType'>
+    readonly customerId: FieldRef<"Address", 'String'>
   }
     
 
@@ -3374,11 +3383,10 @@ export namespace Prisma {
     id: string | null
     orderId: string | null
     externalLineId: string | null
-    name: string | null
+    title: string | null
     sku: string | null
     quantity: number | null
     price: number | null
-    currency: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3387,11 +3395,10 @@ export namespace Prisma {
     id: string | null
     orderId: string | null
     externalLineId: string | null
-    name: string | null
+    title: string | null
     sku: string | null
     quantity: number | null
     price: number | null
-    currency: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3400,11 +3407,10 @@ export namespace Prisma {
     id: number
     orderId: number
     externalLineId: number
-    name: number
+    title: number
     sku: number
     quantity: number
     price: number
-    currency: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -3425,11 +3431,10 @@ export namespace Prisma {
     id?: true
     orderId?: true
     externalLineId?: true
-    name?: true
+    title?: true
     sku?: true
     quantity?: true
     price?: true
-    currency?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3438,11 +3443,10 @@ export namespace Prisma {
     id?: true
     orderId?: true
     externalLineId?: true
-    name?: true
+    title?: true
     sku?: true
     quantity?: true
     price?: true
-    currency?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3451,11 +3455,10 @@ export namespace Prisma {
     id?: true
     orderId?: true
     externalLineId?: true
-    name?: true
+    title?: true
     sku?: true
     quantity?: true
     price?: true
-    currency?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3551,11 +3554,10 @@ export namespace Prisma {
     id: string
     orderId: string
     externalLineId: string
-    name: string
+    title: string
     sku: string
     quantity: number
     price: number
-    currency: string
     createdAt: Date
     updatedAt: Date
     _count: OrderItemCountAggregateOutputType | null
@@ -3583,11 +3585,10 @@ export namespace Prisma {
     id?: boolean
     orderId?: boolean
     externalLineId?: boolean
-    name?: boolean
+    title?: boolean
     sku?: boolean
     quantity?: boolean
     price?: boolean
-    currency?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     Order?: boolean | OrderDefaultArgs<ExtArgs>
@@ -3597,11 +3598,10 @@ export namespace Prisma {
     id?: boolean
     orderId?: boolean
     externalLineId?: boolean
-    name?: boolean
+    title?: boolean
     sku?: boolean
     quantity?: boolean
     price?: boolean
-    currency?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -3620,11 +3620,10 @@ export namespace Prisma {
       id: string
       orderId: string
       externalLineId: string
-      name: string
+      title: string
       sku: string
       quantity: number
       price: number
-      currency: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["orderItem"]>
@@ -4025,11 +4024,10 @@ export namespace Prisma {
     readonly id: FieldRef<"OrderItem", 'String'>
     readonly orderId: FieldRef<"OrderItem", 'String'>
     readonly externalLineId: FieldRef<"OrderItem", 'String'>
-    readonly name: FieldRef<"OrderItem", 'String'>
+    readonly title: FieldRef<"OrderItem", 'String'>
     readonly sku: FieldRef<"OrderItem", 'String'>
     readonly quantity: FieldRef<"OrderItem", 'Int'>
     readonly price: FieldRef<"OrderItem", 'Float'>
-    readonly currency: FieldRef<"OrderItem", 'String'>
     readonly createdAt: FieldRef<"OrderItem", 'DateTime'>
     readonly updatedAt: FieldRef<"OrderItem", 'DateTime'>
   }
@@ -4385,7 +4383,7 @@ export namespace Prisma {
     customerId: string | null
     totalAmount: number | null
     currency: string | null
-    addressId: string | null
+    shippingAddressId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4396,7 +4394,7 @@ export namespace Prisma {
     customerId: string | null
     totalAmount: number | null
     currency: string | null
-    addressId: string | null
+    shippingAddressId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4407,7 +4405,7 @@ export namespace Prisma {
     customerId: number
     totalAmount: number
     currency: number
-    addressId: number
+    shippingAddressId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4428,7 +4426,7 @@ export namespace Prisma {
     customerId?: true
     totalAmount?: true
     currency?: true
-    addressId?: true
+    shippingAddressId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4439,7 +4437,7 @@ export namespace Prisma {
     customerId?: true
     totalAmount?: true
     currency?: true
-    addressId?: true
+    shippingAddressId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4450,7 +4448,7 @@ export namespace Prisma {
     customerId?: true
     totalAmount?: true
     currency?: true
-    addressId?: true
+    shippingAddressId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4548,7 +4546,7 @@ export namespace Prisma {
     customerId: string
     totalAmount: number
     currency: string
-    addressId: string
+    shippingAddressId: string
     createdAt: Date
     updatedAt: Date | null
     _count: OrderCountAggregateOutputType | null
@@ -4578,11 +4576,11 @@ export namespace Prisma {
     customerId?: boolean
     totalAmount?: boolean
     currency?: boolean
-    addressId?: boolean
+    shippingAddressId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
-    address?: boolean | AddressDefaultArgs<ExtArgs>
+    shippingAddress?: boolean | AddressDefaultArgs<ExtArgs>
     items?: boolean | Order$itemsArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
@@ -4593,14 +4591,14 @@ export namespace Prisma {
     customerId?: boolean
     totalAmount?: boolean
     currency?: boolean
-    addressId?: boolean
+    shippingAddressId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
-    address?: boolean | AddressDefaultArgs<ExtArgs>
+    shippingAddress?: boolean | AddressDefaultArgs<ExtArgs>
     items?: boolean | Order$itemsArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -4610,7 +4608,7 @@ export namespace Prisma {
     name: "Order"
     objects: {
       customer: Prisma.$CustomerPayload<ExtArgs>
-      address: Prisma.$AddressPayload<ExtArgs>
+      shippingAddress: Prisma.$AddressPayload<ExtArgs>
       items: Prisma.$OrderItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -4619,7 +4617,7 @@ export namespace Prisma {
       customerId: string
       totalAmount: number
       currency: string
-      addressId: string
+      shippingAddressId: string
       createdAt: Date
       updatedAt: Date | null
     }, ExtArgs["result"]["order"]>
@@ -4989,7 +4987,7 @@ export namespace Prisma {
 
     customer<T extends CustomerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomerDefaultArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
-    address<T extends AddressDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AddressDefaultArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+    shippingAddress<T extends AddressDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AddressDefaultArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
     items<T extends Order$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, 'findMany'> | Null>;
 
@@ -5026,7 +5024,7 @@ export namespace Prisma {
     readonly customerId: FieldRef<"Order", 'String'>
     readonly totalAmount: FieldRef<"Order", 'Float'>
     readonly currency: FieldRef<"Order", 'String'>
-    readonly addressId: FieldRef<"Order", 'String'>
+    readonly shippingAddressId: FieldRef<"Order", 'String'>
     readonly createdAt: FieldRef<"Order", 'DateTime'>
     readonly updatedAt: FieldRef<"Order", 'DateTime'>
   }
@@ -5393,17 +5391,15 @@ export namespace Prisma {
 
   export const CustomerScalarFieldEnum: {
     id: 'id',
-    userId: 'userId',
-    addressId: 'addressId',
     email: 'email',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
     firstName: 'firstName',
     lastName: 'lastName',
     state: 'state',
     verifiedEmail: 'verifiedEmail',
     phone: 'phone',
-    currency: 'currency'
+    currency: 'currency',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
@@ -5419,14 +5415,14 @@ export namespace Prisma {
     province: 'province',
     country: 'country',
     lastName: 'lastName',
-    address2: 'address2',
     company: 'company',
-    latitude: 'latitude',
-    longitude: 'longitude',
     name: 'name',
     countryCode: 'countryCode',
     provinceCode: 'provinceCode',
-    type: 'type'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    addressType: 'addressType',
+    customerId: 'customerId'
   };
 
   export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeof AddressScalarFieldEnum]
@@ -5436,11 +5432,10 @@ export namespace Prisma {
     id: 'id',
     orderId: 'orderId',
     externalLineId: 'externalLineId',
-    name: 'name',
+    title: 'title',
     sku: 'sku',
     quantity: 'quantity',
     price: 'price',
-    currency: 'currency',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -5454,7 +5449,7 @@ export namespace Prisma {
     customerId: 'customerId',
     totalAmount: 'totalAmount',
     currency: 'currency',
-    addressId: 'addressId',
+    shippingAddressId: 'shippingAddressId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -5513,6 +5508,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'AddressType'
    */
   export type EnumAddressTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AddressType'>
@@ -5552,20 +5561,6 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
-
-
-  /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
   /**
    * Deep Input Types
    */
@@ -5576,71 +5571,63 @@ export namespace Prisma {
     OR?: CustomerWhereInput[]
     NOT?: CustomerWhereInput | CustomerWhereInput[]
     id?: StringFilter<"Customer"> | string
-    userId?: StringFilter<"Customer"> | string
-    addressId?: StringFilter<"Customer"> | string
     email?: StringFilter<"Customer"> | string
-    createdAt?: StringFilter<"Customer"> | string
-    updatedAt?: StringFilter<"Customer"> | string
     firstName?: StringFilter<"Customer"> | string
     lastName?: StringFilter<"Customer"> | string
     state?: StringFilter<"Customer"> | string
     verifiedEmail?: BoolFilter<"Customer"> | boolean
-    phone?: StringFilter<"Customer"> | string
-    currency?: StringFilter<"Customer"> | string
-    address?: XOR<AddressRelationFilter, AddressWhereInput>
+    phone?: StringNullableFilter<"Customer"> | string | null
+    currency?: StringNullableFilter<"Customer"> | string | null
+    createdAt?: DateTimeFilter<"Customer"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Customer"> | Date | string | null
     Order?: OrderListRelationFilter
+    Address?: AddressListRelationFilter
   }
 
   export type CustomerOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
-    addressId?: SortOrder
     email?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     state?: SortOrder
     verifiedEmail?: SortOrder
-    phone?: SortOrder
-    currency?: SortOrder
-    address?: AddressOrderByWithRelationInput
+    phone?: SortOrderInput | SortOrder
+    currency?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     Order?: OrderOrderByRelationAggregateInput
+    Address?: AddressOrderByRelationAggregateInput
   }
 
   export type CustomerWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    userId?: string
-    addressId?: string
+    email?: string
     AND?: CustomerWhereInput | CustomerWhereInput[]
     OR?: CustomerWhereInput[]
     NOT?: CustomerWhereInput | CustomerWhereInput[]
-    email?: StringFilter<"Customer"> | string
-    createdAt?: StringFilter<"Customer"> | string
-    updatedAt?: StringFilter<"Customer"> | string
     firstName?: StringFilter<"Customer"> | string
     lastName?: StringFilter<"Customer"> | string
     state?: StringFilter<"Customer"> | string
     verifiedEmail?: BoolFilter<"Customer"> | boolean
-    phone?: StringFilter<"Customer"> | string
-    currency?: StringFilter<"Customer"> | string
-    address?: XOR<AddressRelationFilter, AddressWhereInput>
+    phone?: StringNullableFilter<"Customer"> | string | null
+    currency?: StringNullableFilter<"Customer"> | string | null
+    createdAt?: DateTimeFilter<"Customer"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Customer"> | Date | string | null
     Order?: OrderListRelationFilter
-  }, "id" | "userId" | "addressId">
+    Address?: AddressListRelationFilter
+  }, "id" | "email">
 
   export type CustomerOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
-    addressId?: SortOrder
     email?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     state?: SortOrder
     verifiedEmail?: SortOrder
-    phone?: SortOrder
-    currency?: SortOrder
+    phone?: SortOrderInput | SortOrder
+    currency?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: CustomerCountOrderByAggregateInput
     _max?: CustomerMaxOrderByAggregateInput
     _min?: CustomerMinOrderByAggregateInput
@@ -5651,17 +5638,15 @@ export namespace Prisma {
     OR?: CustomerScalarWhereWithAggregatesInput[]
     NOT?: CustomerScalarWhereWithAggregatesInput | CustomerScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Customer"> | string
-    userId?: StringWithAggregatesFilter<"Customer"> | string
-    addressId?: StringWithAggregatesFilter<"Customer"> | string
     email?: StringWithAggregatesFilter<"Customer"> | string
-    createdAt?: StringWithAggregatesFilter<"Customer"> | string
-    updatedAt?: StringWithAggregatesFilter<"Customer"> | string
     firstName?: StringWithAggregatesFilter<"Customer"> | string
     lastName?: StringWithAggregatesFilter<"Customer"> | string
     state?: StringWithAggregatesFilter<"Customer"> | string
     verifiedEmail?: BoolWithAggregatesFilter<"Customer"> | boolean
-    phone?: StringWithAggregatesFilter<"Customer"> | string
-    currency?: StringWithAggregatesFilter<"Customer"> | string
+    phone?: StringNullableWithAggregatesFilter<"Customer"> | string | null
+    currency?: StringNullableWithAggregatesFilter<"Customer"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Customer"> | Date | string
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
   }
 
   export type AddressWhereInput = {
@@ -5677,14 +5662,14 @@ export namespace Prisma {
     province?: StringFilter<"Address"> | string
     country?: StringFilter<"Address"> | string
     lastName?: StringFilter<"Address"> | string
-    address2?: StringFilter<"Address"> | string
     company?: StringFilter<"Address"> | string
-    latitude?: StringFilter<"Address"> | string
-    longitude?: StringFilter<"Address"> | string
     name?: StringFilter<"Address"> | string
     countryCode?: StringFilter<"Address"> | string
     provinceCode?: StringFilter<"Address"> | string
-    type?: EnumAddressTypeFilter<"Address"> | $Enums.AddressType
+    createdAt?: DateTimeFilter<"Address"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Address"> | Date | string | null
+    addressType?: EnumAddressTypeFilter<"Address"> | $Enums.AddressType
+    customerId?: StringNullableFilter<"Address"> | string | null
     customer?: XOR<CustomerNullableRelationFilter, CustomerWhereInput> | null
     Order?: OrderListRelationFilter
   }
@@ -5699,14 +5684,14 @@ export namespace Prisma {
     province?: SortOrder
     country?: SortOrder
     lastName?: SortOrder
-    address2?: SortOrder
     company?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
     name?: SortOrder
     countryCode?: SortOrder
     provinceCode?: SortOrder
-    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    addressType?: SortOrder
+    customerId?: SortOrderInput | SortOrder
     customer?: CustomerOrderByWithRelationInput
     Order?: OrderOrderByRelationAggregateInput
   }
@@ -5724,14 +5709,14 @@ export namespace Prisma {
     province?: StringFilter<"Address"> | string
     country?: StringFilter<"Address"> | string
     lastName?: StringFilter<"Address"> | string
-    address2?: StringFilter<"Address"> | string
     company?: StringFilter<"Address"> | string
-    latitude?: StringFilter<"Address"> | string
-    longitude?: StringFilter<"Address"> | string
     name?: StringFilter<"Address"> | string
     countryCode?: StringFilter<"Address"> | string
     provinceCode?: StringFilter<"Address"> | string
-    type?: EnumAddressTypeFilter<"Address"> | $Enums.AddressType
+    createdAt?: DateTimeFilter<"Address"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Address"> | Date | string | null
+    addressType?: EnumAddressTypeFilter<"Address"> | $Enums.AddressType
+    customerId?: StringNullableFilter<"Address"> | string | null
     customer?: XOR<CustomerNullableRelationFilter, CustomerWhereInput> | null
     Order?: OrderListRelationFilter
   }, "id">
@@ -5746,14 +5731,14 @@ export namespace Prisma {
     province?: SortOrder
     country?: SortOrder
     lastName?: SortOrder
-    address2?: SortOrder
     company?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
     name?: SortOrder
     countryCode?: SortOrder
     provinceCode?: SortOrder
-    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    addressType?: SortOrder
+    customerId?: SortOrderInput | SortOrder
     _count?: AddressCountOrderByAggregateInput
     _max?: AddressMaxOrderByAggregateInput
     _min?: AddressMinOrderByAggregateInput
@@ -5772,14 +5757,14 @@ export namespace Prisma {
     province?: StringWithAggregatesFilter<"Address"> | string
     country?: StringWithAggregatesFilter<"Address"> | string
     lastName?: StringWithAggregatesFilter<"Address"> | string
-    address2?: StringWithAggregatesFilter<"Address"> | string
     company?: StringWithAggregatesFilter<"Address"> | string
-    latitude?: StringWithAggregatesFilter<"Address"> | string
-    longitude?: StringWithAggregatesFilter<"Address"> | string
     name?: StringWithAggregatesFilter<"Address"> | string
     countryCode?: StringWithAggregatesFilter<"Address"> | string
     provinceCode?: StringWithAggregatesFilter<"Address"> | string
-    type?: EnumAddressTypeWithAggregatesFilter<"Address"> | $Enums.AddressType
+    createdAt?: DateTimeWithAggregatesFilter<"Address"> | Date | string
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"Address"> | Date | string | null
+    addressType?: EnumAddressTypeWithAggregatesFilter<"Address"> | $Enums.AddressType
+    customerId?: StringNullableWithAggregatesFilter<"Address"> | string | null
   }
 
   export type OrderItemWhereInput = {
@@ -5789,11 +5774,10 @@ export namespace Prisma {
     id?: StringFilter<"OrderItem"> | string
     orderId?: StringFilter<"OrderItem"> | string
     externalLineId?: StringFilter<"OrderItem"> | string
-    name?: StringFilter<"OrderItem"> | string
+    title?: StringFilter<"OrderItem"> | string
     sku?: StringFilter<"OrderItem"> | string
     quantity?: IntFilter<"OrderItem"> | number
     price?: FloatFilter<"OrderItem"> | number
-    currency?: StringFilter<"OrderItem"> | string
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
     Order?: XOR<OrderRelationFilter, OrderWhereInput>
@@ -5803,11 +5787,10 @@ export namespace Prisma {
     id?: SortOrder
     orderId?: SortOrder
     externalLineId?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
     sku?: SortOrder
     quantity?: SortOrder
     price?: SortOrder
-    currency?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     Order?: OrderOrderByWithRelationInput
@@ -5820,11 +5803,10 @@ export namespace Prisma {
     NOT?: OrderItemWhereInput | OrderItemWhereInput[]
     orderId?: StringFilter<"OrderItem"> | string
     externalLineId?: StringFilter<"OrderItem"> | string
-    name?: StringFilter<"OrderItem"> | string
+    title?: StringFilter<"OrderItem"> | string
     sku?: StringFilter<"OrderItem"> | string
     quantity?: IntFilter<"OrderItem"> | number
     price?: FloatFilter<"OrderItem"> | number
-    currency?: StringFilter<"OrderItem"> | string
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
     Order?: XOR<OrderRelationFilter, OrderWhereInput>
@@ -5834,11 +5816,10 @@ export namespace Prisma {
     id?: SortOrder
     orderId?: SortOrder
     externalLineId?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
     sku?: SortOrder
     quantity?: SortOrder
     price?: SortOrder
-    currency?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: OrderItemCountOrderByAggregateInput
@@ -5855,11 +5836,10 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"OrderItem"> | string
     orderId?: StringWithAggregatesFilter<"OrderItem"> | string
     externalLineId?: StringWithAggregatesFilter<"OrderItem"> | string
-    name?: StringWithAggregatesFilter<"OrderItem"> | string
+    title?: StringWithAggregatesFilter<"OrderItem"> | string
     sku?: StringWithAggregatesFilter<"OrderItem"> | string
     quantity?: IntWithAggregatesFilter<"OrderItem"> | number
     price?: FloatWithAggregatesFilter<"OrderItem"> | number
-    currency?: StringWithAggregatesFilter<"OrderItem"> | string
     createdAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
   }
@@ -5873,11 +5853,11 @@ export namespace Prisma {
     customerId?: StringFilter<"Order"> | string
     totalAmount?: FloatFilter<"Order"> | number
     currency?: StringFilter<"Order"> | string
-    addressId?: StringFilter<"Order"> | string
+    shippingAddressId?: StringFilter<"Order"> | string
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
     customer?: XOR<CustomerRelationFilter, CustomerWhereInput>
-    address?: XOR<AddressRelationFilter, AddressWhereInput>
+    shippingAddress?: XOR<AddressRelationFilter, AddressWhereInput>
     items?: OrderItemListRelationFilter
   }
 
@@ -5887,11 +5867,11 @@ export namespace Prisma {
     customerId?: SortOrder
     totalAmount?: SortOrder
     currency?: SortOrder
-    addressId?: SortOrder
+    shippingAddressId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     customer?: CustomerOrderByWithRelationInput
-    address?: AddressOrderByWithRelationInput
+    shippingAddress?: AddressOrderByWithRelationInput
     items?: OrderItemOrderByRelationAggregateInput
   }
 
@@ -5904,11 +5884,11 @@ export namespace Prisma {
     customerId?: StringFilter<"Order"> | string
     totalAmount?: FloatFilter<"Order"> | number
     currency?: StringFilter<"Order"> | string
-    addressId?: StringFilter<"Order"> | string
+    shippingAddressId?: StringFilter<"Order"> | string
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
     customer?: XOR<CustomerRelationFilter, CustomerWhereInput>
-    address?: XOR<AddressRelationFilter, AddressWhereInput>
+    shippingAddress?: XOR<AddressRelationFilter, AddressWhereInput>
     items?: OrderItemListRelationFilter
   }, "id" | "externalGid">
 
@@ -5918,7 +5898,7 @@ export namespace Prisma {
     customerId?: SortOrder
     totalAmount?: SortOrder
     currency?: SortOrder
-    addressId?: SortOrder
+    shippingAddressId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     _count?: OrderCountOrderByAggregateInput
@@ -5937,117 +5917,108 @@ export namespace Prisma {
     customerId?: StringWithAggregatesFilter<"Order"> | string
     totalAmount?: FloatWithAggregatesFilter<"Order"> | number
     currency?: StringWithAggregatesFilter<"Order"> | string
-    addressId?: StringWithAggregatesFilter<"Order"> | string
+    shippingAddressId?: StringWithAggregatesFilter<"Order"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
   }
 
   export type CustomerCreateInput = {
     id?: string
-    userId: string
     email: string
-    createdAt: string
-    updatedAt: string
     firstName: string
     lastName: string
     state: string
     verifiedEmail: boolean
-    phone: string
-    currency: string
-    address: AddressCreateNestedOneWithoutCustomerInput
+    phone?: string | null
+    currency?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
     Order?: OrderCreateNestedManyWithoutCustomerInput
+    Address?: AddressCreateNestedManyWithoutCustomerInput
   }
 
   export type CustomerUncheckedCreateInput = {
     id?: string
-    userId: string
-    addressId: string
     email: string
-    createdAt: string
-    updatedAt: string
     firstName: string
     lastName: string
     state: string
     verifiedEmail: boolean
-    phone: string
-    currency: string
+    phone?: string | null
+    currency?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
     Order?: OrderUncheckedCreateNestedManyWithoutCustomerInput
+    Address?: AddressUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type CustomerUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    createdAt?: StringFieldUpdateOperationsInput | string
-    updatedAt?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
     verifiedEmail?: BoolFieldUpdateOperationsInput | boolean
-    phone?: StringFieldUpdateOperationsInput | string
-    currency?: StringFieldUpdateOperationsInput | string
-    address?: AddressUpdateOneRequiredWithoutCustomerNestedInput
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Order?: OrderUpdateManyWithoutCustomerNestedInput
+    Address?: AddressUpdateManyWithoutCustomerNestedInput
   }
 
   export type CustomerUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    createdAt?: StringFieldUpdateOperationsInput | string
-    updatedAt?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
     verifiedEmail?: BoolFieldUpdateOperationsInput | boolean
-    phone?: StringFieldUpdateOperationsInput | string
-    currency?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Order?: OrderUncheckedUpdateManyWithoutCustomerNestedInput
+    Address?: AddressUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type CustomerCreateManyInput = {
     id?: string
-    userId: string
-    addressId: string
     email: string
-    createdAt: string
-    updatedAt: string
     firstName: string
     lastName: string
     state: string
     verifiedEmail: boolean
-    phone: string
-    currency: string
+    phone?: string | null
+    currency?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
   }
 
   export type CustomerUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    createdAt?: StringFieldUpdateOperationsInput | string
-    updatedAt?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
     verifiedEmail?: BoolFieldUpdateOperationsInput | boolean
-    phone?: StringFieldUpdateOperationsInput | string
-    currency?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type CustomerUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    createdAt?: StringFieldUpdateOperationsInput | string
-    updatedAt?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
     verifiedEmail?: BoolFieldUpdateOperationsInput | boolean
-    phone?: StringFieldUpdateOperationsInput | string
-    currency?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type AddressCreateInput = {
@@ -6060,16 +6031,15 @@ export namespace Prisma {
     province: string
     country: string
     lastName: string
-    address2: string
     company: string
-    latitude: string
-    longitude: string
     name: string
     countryCode: string
     provinceCode: string
-    type?: $Enums.AddressType
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    addressType?: $Enums.AddressType
     customer?: CustomerCreateNestedOneWithoutAddressInput
-    Order?: OrderCreateNestedManyWithoutAddressInput
+    Order?: OrderCreateNestedManyWithoutShippingAddressInput
   }
 
   export type AddressUncheckedCreateInput = {
@@ -6082,16 +6052,15 @@ export namespace Prisma {
     province: string
     country: string
     lastName: string
-    address2: string
     company: string
-    latitude: string
-    longitude: string
     name: string
     countryCode: string
     provinceCode: string
-    type?: $Enums.AddressType
-    customer?: CustomerUncheckedCreateNestedOneWithoutAddressInput
-    Order?: OrderUncheckedCreateNestedManyWithoutAddressInput
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    addressType?: $Enums.AddressType
+    customerId?: string | null
+    Order?: OrderUncheckedCreateNestedManyWithoutShippingAddressInput
   }
 
   export type AddressUpdateInput = {
@@ -6104,16 +6073,15 @@ export namespace Prisma {
     province?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    address2?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
-    latitude?: StringFieldUpdateOperationsInput | string
-    longitude?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     provinceCode?: StringFieldUpdateOperationsInput | string
-    type?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addressType?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
     customer?: CustomerUpdateOneWithoutAddressNestedInput
-    Order?: OrderUpdateManyWithoutAddressNestedInput
+    Order?: OrderUpdateManyWithoutShippingAddressNestedInput
   }
 
   export type AddressUncheckedUpdateInput = {
@@ -6126,16 +6094,15 @@ export namespace Prisma {
     province?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    address2?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
-    latitude?: StringFieldUpdateOperationsInput | string
-    longitude?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     provinceCode?: StringFieldUpdateOperationsInput | string
-    type?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
-    customer?: CustomerUncheckedUpdateOneWithoutAddressNestedInput
-    Order?: OrderUncheckedUpdateManyWithoutAddressNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addressType?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+    customerId?: NullableStringFieldUpdateOperationsInput | string | null
+    Order?: OrderUncheckedUpdateManyWithoutShippingAddressNestedInput
   }
 
   export type AddressCreateManyInput = {
@@ -6148,14 +6115,14 @@ export namespace Prisma {
     province: string
     country: string
     lastName: string
-    address2: string
     company: string
-    latitude: string
-    longitude: string
     name: string
     countryCode: string
     provinceCode: string
-    type?: $Enums.AddressType
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    addressType?: $Enums.AddressType
+    customerId?: string | null
   }
 
   export type AddressUpdateManyMutationInput = {
@@ -6168,14 +6135,13 @@ export namespace Prisma {
     province?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    address2?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
-    latitude?: StringFieldUpdateOperationsInput | string
-    longitude?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     provinceCode?: StringFieldUpdateOperationsInput | string
-    type?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addressType?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
   }
 
   export type AddressUncheckedUpdateManyInput = {
@@ -6188,24 +6154,23 @@ export namespace Prisma {
     province?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    address2?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
-    latitude?: StringFieldUpdateOperationsInput | string
-    longitude?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     provinceCode?: StringFieldUpdateOperationsInput | string
-    type?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addressType?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+    customerId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderItemCreateInput = {
     id?: string
     externalLineId: string
-    name: string
+    title: string
     sku: string
     quantity: number
     price: number
-    currency: string
     createdAt?: Date | string
     updatedAt?: Date | string
     Order: OrderCreateNestedOneWithoutItemsInput
@@ -6215,11 +6180,10 @@ export namespace Prisma {
     id?: string
     orderId: string
     externalLineId: string
-    name: string
+    title: string
     sku: string
     quantity: number
     price: number
-    currency: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6227,11 +6191,10 @@ export namespace Prisma {
   export type OrderItemUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     externalLineId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
-    currency?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Order?: OrderUpdateOneRequiredWithoutItemsNestedInput
@@ -6241,11 +6204,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
     externalLineId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
-    currency?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6254,11 +6216,10 @@ export namespace Prisma {
     id?: string
     orderId: string
     externalLineId: string
-    name: string
+    title: string
     sku: string
     quantity: number
     price: number
-    currency: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6266,11 +6227,10 @@ export namespace Prisma {
   export type OrderItemUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     externalLineId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
-    currency?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6279,11 +6239,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
     externalLineId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
-    currency?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6296,7 +6255,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     customer: CustomerCreateNestedOneWithoutOrderInput
-    address: AddressCreateNestedOneWithoutOrderInput
+    shippingAddress: AddressCreateNestedOneWithoutOrderInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
   }
 
@@ -6306,7 +6265,7 @@ export namespace Prisma {
     customerId: string
     totalAmount: number
     currency: string
-    addressId: string
+    shippingAddressId: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -6320,7 +6279,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     customer?: CustomerUpdateOneRequiredWithoutOrderNestedInput
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    shippingAddress?: AddressUpdateOneRequiredWithoutOrderNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
   }
 
@@ -6330,7 +6289,7 @@ export namespace Prisma {
     customerId?: StringFieldUpdateOperationsInput | string
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    shippingAddressId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -6342,7 +6301,7 @@ export namespace Prisma {
     customerId: string
     totalAmount: number
     currency: string
-    addressId: string
+    shippingAddressId: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -6362,7 +6321,7 @@ export namespace Prisma {
     customerId?: StringFieldUpdateOperationsInput | string
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    shippingAddressId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -6387,9 +6346,41 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type AddressRelationFilter = {
-    is?: AddressWhereInput
-    isNot?: AddressWhereInput
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type OrderListRelationFilter = {
@@ -6398,53 +6389,62 @@ export namespace Prisma {
     none?: OrderWhereInput
   }
 
+  export type AddressListRelationFilter = {
+    every?: AddressWhereInput
+    some?: AddressWhereInput
+    none?: AddressWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type OrderOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AddressOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type CustomerCountOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    addressId?: SortOrder
     email?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     state?: SortOrder
     verifiedEmail?: SortOrder
     phone?: SortOrder
     currency?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CustomerMaxOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    addressId?: SortOrder
     email?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     state?: SortOrder
     verifiedEmail?: SortOrder
     phone?: SortOrder
     currency?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CustomerMinOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    addressId?: SortOrder
     email?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     state?: SortOrder
     verifiedEmail?: SortOrder
     phone?: SortOrder
     currency?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -6473,6 +6473,52 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type EnumAddressTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.AddressType | EnumAddressTypeFieldRefInput<$PrismaModel>
     in?: $Enums.AddressType[] | ListEnumAddressTypeFieldRefInput<$PrismaModel>
@@ -6495,14 +6541,14 @@ export namespace Prisma {
     province?: SortOrder
     country?: SortOrder
     lastName?: SortOrder
-    address2?: SortOrder
     company?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
     name?: SortOrder
     countryCode?: SortOrder
     provinceCode?: SortOrder
-    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    addressType?: SortOrder
+    customerId?: SortOrder
   }
 
   export type AddressMaxOrderByAggregateInput = {
@@ -6515,14 +6561,14 @@ export namespace Prisma {
     province?: SortOrder
     country?: SortOrder
     lastName?: SortOrder
-    address2?: SortOrder
     company?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
     name?: SortOrder
     countryCode?: SortOrder
     provinceCode?: SortOrder
-    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    addressType?: SortOrder
+    customerId?: SortOrder
   }
 
   export type AddressMinOrderByAggregateInput = {
@@ -6535,14 +6581,14 @@ export namespace Prisma {
     province?: SortOrder
     country?: SortOrder
     lastName?: SortOrder
-    address2?: SortOrder
     company?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
     name?: SortOrder
     countryCode?: SortOrder
     provinceCode?: SortOrder
-    type?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    addressType?: SortOrder
+    customerId?: SortOrder
   }
 
   export type EnumAddressTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -6577,17 +6623,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type OrderRelationFilter = {
     is?: OrderWhereInput
     isNot?: OrderWhereInput
@@ -6597,11 +6632,10 @@ export namespace Prisma {
     id?: SortOrder
     orderId?: SortOrder
     externalLineId?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
     sku?: SortOrder
     quantity?: SortOrder
     price?: SortOrder
-    currency?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6615,11 +6649,10 @@ export namespace Prisma {
     id?: SortOrder
     orderId?: SortOrder
     externalLineId?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
     sku?: SortOrder
     quantity?: SortOrder
     price?: SortOrder
-    currency?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6628,11 +6661,10 @@ export namespace Prisma {
     id?: SortOrder
     orderId?: SortOrder
     externalLineId?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
     sku?: SortOrder
     quantity?: SortOrder
     price?: SortOrder
-    currency?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6674,45 +6706,20 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type CustomerRelationFilter = {
     is?: CustomerWhereInput
     isNot?: CustomerWhereInput
+  }
+
+  export type AddressRelationFilter = {
+    is?: AddressWhereInput
+    isNot?: AddressWhereInput
   }
 
   export type OrderItemListRelationFilter = {
     every?: OrderItemWhereInput
     some?: OrderItemWhereInput
     none?: OrderItemWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type OrderItemOrderByRelationAggregateInput = {
@@ -6725,7 +6732,7 @@ export namespace Prisma {
     customerId?: SortOrder
     totalAmount?: SortOrder
     currency?: SortOrder
-    addressId?: SortOrder
+    shippingAddressId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6740,7 +6747,7 @@ export namespace Prisma {
     customerId?: SortOrder
     totalAmount?: SortOrder
     currency?: SortOrder
-    addressId?: SortOrder
+    shippingAddressId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6751,33 +6758,13 @@ export namespace Prisma {
     customerId?: SortOrder
     totalAmount?: SortOrder
     currency?: SortOrder
-    addressId?: SortOrder
+    shippingAddressId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type OrderSumOrderByAggregateInput = {
     totalAmount?: SortOrder
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type AddressCreateNestedOneWithoutCustomerInput = {
-    create?: XOR<AddressCreateWithoutCustomerInput, AddressUncheckedCreateWithoutCustomerInput>
-    connectOrCreate?: AddressCreateOrConnectWithoutCustomerInput
-    connect?: AddressWhereUniqueInput
   }
 
   export type OrderCreateNestedManyWithoutCustomerInput = {
@@ -6787,11 +6774,25 @@ export namespace Prisma {
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
+  export type AddressCreateNestedManyWithoutCustomerInput = {
+    create?: XOR<AddressCreateWithoutCustomerInput, AddressUncheckedCreateWithoutCustomerInput> | AddressCreateWithoutCustomerInput[] | AddressUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: AddressCreateOrConnectWithoutCustomerInput | AddressCreateOrConnectWithoutCustomerInput[]
+    createMany?: AddressCreateManyCustomerInputEnvelope
+    connect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
+  }
+
   export type OrderUncheckedCreateNestedManyWithoutCustomerInput = {
     create?: XOR<OrderCreateWithoutCustomerInput, OrderUncheckedCreateWithoutCustomerInput> | OrderCreateWithoutCustomerInput[] | OrderUncheckedCreateWithoutCustomerInput[]
     connectOrCreate?: OrderCreateOrConnectWithoutCustomerInput | OrderCreateOrConnectWithoutCustomerInput[]
     createMany?: OrderCreateManyCustomerInputEnvelope
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+  }
+
+  export type AddressUncheckedCreateNestedManyWithoutCustomerInput = {
+    create?: XOR<AddressCreateWithoutCustomerInput, AddressUncheckedCreateWithoutCustomerInput> | AddressCreateWithoutCustomerInput[] | AddressUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: AddressCreateOrConnectWithoutCustomerInput | AddressCreateOrConnectWithoutCustomerInput[]
+    createMany?: AddressCreateManyCustomerInputEnvelope
+    connect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -6802,12 +6803,16 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type AddressUpdateOneRequiredWithoutCustomerNestedInput = {
-    create?: XOR<AddressCreateWithoutCustomerInput, AddressUncheckedCreateWithoutCustomerInput>
-    connectOrCreate?: AddressCreateOrConnectWithoutCustomerInput
-    upsert?: AddressUpsertWithoutCustomerInput
-    connect?: AddressWhereUniqueInput
-    update?: XOR<XOR<AddressUpdateToOneWithWhereWithoutCustomerInput, AddressUpdateWithoutCustomerInput>, AddressUncheckedUpdateWithoutCustomerInput>
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type OrderUpdateManyWithoutCustomerNestedInput = {
@@ -6824,6 +6829,20 @@ export namespace Prisma {
     deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
   }
 
+  export type AddressUpdateManyWithoutCustomerNestedInput = {
+    create?: XOR<AddressCreateWithoutCustomerInput, AddressUncheckedCreateWithoutCustomerInput> | AddressCreateWithoutCustomerInput[] | AddressUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: AddressCreateOrConnectWithoutCustomerInput | AddressCreateOrConnectWithoutCustomerInput[]
+    upsert?: AddressUpsertWithWhereUniqueWithoutCustomerInput | AddressUpsertWithWhereUniqueWithoutCustomerInput[]
+    createMany?: AddressCreateManyCustomerInputEnvelope
+    set?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
+    disconnect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
+    delete?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
+    connect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
+    update?: AddressUpdateWithWhereUniqueWithoutCustomerInput | AddressUpdateWithWhereUniqueWithoutCustomerInput[]
+    updateMany?: AddressUpdateManyWithWhereWithoutCustomerInput | AddressUpdateManyWithWhereWithoutCustomerInput[]
+    deleteMany?: AddressScalarWhereInput | AddressScalarWhereInput[]
+  }
+
   export type OrderUncheckedUpdateManyWithoutCustomerNestedInput = {
     create?: XOR<OrderCreateWithoutCustomerInput, OrderUncheckedCreateWithoutCustomerInput> | OrderCreateWithoutCustomerInput[] | OrderUncheckedCreateWithoutCustomerInput[]
     connectOrCreate?: OrderCreateOrConnectWithoutCustomerInput | OrderCreateOrConnectWithoutCustomerInput[]
@@ -6838,29 +6857,37 @@ export namespace Prisma {
     deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
   }
 
+  export type AddressUncheckedUpdateManyWithoutCustomerNestedInput = {
+    create?: XOR<AddressCreateWithoutCustomerInput, AddressUncheckedCreateWithoutCustomerInput> | AddressCreateWithoutCustomerInput[] | AddressUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: AddressCreateOrConnectWithoutCustomerInput | AddressCreateOrConnectWithoutCustomerInput[]
+    upsert?: AddressUpsertWithWhereUniqueWithoutCustomerInput | AddressUpsertWithWhereUniqueWithoutCustomerInput[]
+    createMany?: AddressCreateManyCustomerInputEnvelope
+    set?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
+    disconnect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
+    delete?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
+    connect?: AddressWhereUniqueInput | AddressWhereUniqueInput[]
+    update?: AddressUpdateWithWhereUniqueWithoutCustomerInput | AddressUpdateWithWhereUniqueWithoutCustomerInput[]
+    updateMany?: AddressUpdateManyWithWhereWithoutCustomerInput | AddressUpdateManyWithWhereWithoutCustomerInput[]
+    deleteMany?: AddressScalarWhereInput | AddressScalarWhereInput[]
+  }
+
   export type CustomerCreateNestedOneWithoutAddressInput = {
     create?: XOR<CustomerCreateWithoutAddressInput, CustomerUncheckedCreateWithoutAddressInput>
     connectOrCreate?: CustomerCreateOrConnectWithoutAddressInput
     connect?: CustomerWhereUniqueInput
   }
 
-  export type OrderCreateNestedManyWithoutAddressInput = {
-    create?: XOR<OrderCreateWithoutAddressInput, OrderUncheckedCreateWithoutAddressInput> | OrderCreateWithoutAddressInput[] | OrderUncheckedCreateWithoutAddressInput[]
-    connectOrCreate?: OrderCreateOrConnectWithoutAddressInput | OrderCreateOrConnectWithoutAddressInput[]
-    createMany?: OrderCreateManyAddressInputEnvelope
+  export type OrderCreateNestedManyWithoutShippingAddressInput = {
+    create?: XOR<OrderCreateWithoutShippingAddressInput, OrderUncheckedCreateWithoutShippingAddressInput> | OrderCreateWithoutShippingAddressInput[] | OrderUncheckedCreateWithoutShippingAddressInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutShippingAddressInput | OrderCreateOrConnectWithoutShippingAddressInput[]
+    createMany?: OrderCreateManyShippingAddressInputEnvelope
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
-  export type CustomerUncheckedCreateNestedOneWithoutAddressInput = {
-    create?: XOR<CustomerCreateWithoutAddressInput, CustomerUncheckedCreateWithoutAddressInput>
-    connectOrCreate?: CustomerCreateOrConnectWithoutAddressInput
-    connect?: CustomerWhereUniqueInput
-  }
-
-  export type OrderUncheckedCreateNestedManyWithoutAddressInput = {
-    create?: XOR<OrderCreateWithoutAddressInput, OrderUncheckedCreateWithoutAddressInput> | OrderCreateWithoutAddressInput[] | OrderUncheckedCreateWithoutAddressInput[]
-    connectOrCreate?: OrderCreateOrConnectWithoutAddressInput | OrderCreateOrConnectWithoutAddressInput[]
-    createMany?: OrderCreateManyAddressInputEnvelope
+  export type OrderUncheckedCreateNestedManyWithoutShippingAddressInput = {
+    create?: XOR<OrderCreateWithoutShippingAddressInput, OrderUncheckedCreateWithoutShippingAddressInput> | OrderCreateWithoutShippingAddressInput[] | OrderUncheckedCreateWithoutShippingAddressInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutShippingAddressInput | OrderCreateOrConnectWithoutShippingAddressInput[]
+    createMany?: OrderCreateManyShippingAddressInputEnvelope
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
@@ -6878,41 +6905,31 @@ export namespace Prisma {
     update?: XOR<XOR<CustomerUpdateToOneWithWhereWithoutAddressInput, CustomerUpdateWithoutAddressInput>, CustomerUncheckedUpdateWithoutAddressInput>
   }
 
-  export type OrderUpdateManyWithoutAddressNestedInput = {
-    create?: XOR<OrderCreateWithoutAddressInput, OrderUncheckedCreateWithoutAddressInput> | OrderCreateWithoutAddressInput[] | OrderUncheckedCreateWithoutAddressInput[]
-    connectOrCreate?: OrderCreateOrConnectWithoutAddressInput | OrderCreateOrConnectWithoutAddressInput[]
-    upsert?: OrderUpsertWithWhereUniqueWithoutAddressInput | OrderUpsertWithWhereUniqueWithoutAddressInput[]
-    createMany?: OrderCreateManyAddressInputEnvelope
+  export type OrderUpdateManyWithoutShippingAddressNestedInput = {
+    create?: XOR<OrderCreateWithoutShippingAddressInput, OrderUncheckedCreateWithoutShippingAddressInput> | OrderCreateWithoutShippingAddressInput[] | OrderUncheckedCreateWithoutShippingAddressInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutShippingAddressInput | OrderCreateOrConnectWithoutShippingAddressInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutShippingAddressInput | OrderUpsertWithWhereUniqueWithoutShippingAddressInput[]
+    createMany?: OrderCreateManyShippingAddressInputEnvelope
     set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
     disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
     delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
-    update?: OrderUpdateWithWhereUniqueWithoutAddressInput | OrderUpdateWithWhereUniqueWithoutAddressInput[]
-    updateMany?: OrderUpdateManyWithWhereWithoutAddressInput | OrderUpdateManyWithWhereWithoutAddressInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutShippingAddressInput | OrderUpdateWithWhereUniqueWithoutShippingAddressInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutShippingAddressInput | OrderUpdateManyWithWhereWithoutShippingAddressInput[]
     deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
   }
 
-  export type CustomerUncheckedUpdateOneWithoutAddressNestedInput = {
-    create?: XOR<CustomerCreateWithoutAddressInput, CustomerUncheckedCreateWithoutAddressInput>
-    connectOrCreate?: CustomerCreateOrConnectWithoutAddressInput
-    upsert?: CustomerUpsertWithoutAddressInput
-    disconnect?: CustomerWhereInput | boolean
-    delete?: CustomerWhereInput | boolean
-    connect?: CustomerWhereUniqueInput
-    update?: XOR<XOR<CustomerUpdateToOneWithWhereWithoutAddressInput, CustomerUpdateWithoutAddressInput>, CustomerUncheckedUpdateWithoutAddressInput>
-  }
-
-  export type OrderUncheckedUpdateManyWithoutAddressNestedInput = {
-    create?: XOR<OrderCreateWithoutAddressInput, OrderUncheckedCreateWithoutAddressInput> | OrderCreateWithoutAddressInput[] | OrderUncheckedCreateWithoutAddressInput[]
-    connectOrCreate?: OrderCreateOrConnectWithoutAddressInput | OrderCreateOrConnectWithoutAddressInput[]
-    upsert?: OrderUpsertWithWhereUniqueWithoutAddressInput | OrderUpsertWithWhereUniqueWithoutAddressInput[]
-    createMany?: OrderCreateManyAddressInputEnvelope
+  export type OrderUncheckedUpdateManyWithoutShippingAddressNestedInput = {
+    create?: XOR<OrderCreateWithoutShippingAddressInput, OrderUncheckedCreateWithoutShippingAddressInput> | OrderCreateWithoutShippingAddressInput[] | OrderUncheckedCreateWithoutShippingAddressInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutShippingAddressInput | OrderCreateOrConnectWithoutShippingAddressInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutShippingAddressInput | OrderUpsertWithWhereUniqueWithoutShippingAddressInput[]
+    createMany?: OrderCreateManyShippingAddressInputEnvelope
     set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
     disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
     delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
-    update?: OrderUpdateWithWhereUniqueWithoutAddressInput | OrderUpdateWithWhereUniqueWithoutAddressInput[]
-    updateMany?: OrderUpdateManyWithWhereWithoutAddressInput | OrderUpdateManyWithWhereWithoutAddressInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutShippingAddressInput | OrderUpdateWithWhereUniqueWithoutShippingAddressInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutShippingAddressInput | OrderUpdateManyWithWhereWithoutShippingAddressInput[]
     deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
   }
 
@@ -6936,10 +6953,6 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type OrderUpdateOneRequiredWithoutItemsNestedInput = {
@@ -6974,10 +6987,6 @@ export namespace Prisma {
     connectOrCreate?: OrderItemCreateOrConnectWithoutOrderInput | OrderItemCreateOrConnectWithoutOrderInput[]
     createMany?: OrderItemCreateManyOrderInputEnvelope
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type CustomerUpdateOneRequiredWithoutOrderNestedInput = {
@@ -7043,6 +7052,42 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -7079,6 +7124,62 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type NestedEnumAddressTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.AddressType | EnumAddressTypeFieldRefInput<$PrismaModel>
     in?: $Enums.AddressType[] | ListEnumAddressTypeFieldRefInput<$PrismaModel>
@@ -7105,17 +7206,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -7150,103 +7240,6 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type AddressCreateWithoutCustomerInput = {
-    id?: string
-    firstName: string
-    address1: string
-    phone: string
-    city: string
-    zip: string
-    province: string
-    country: string
-    lastName: string
-    address2: string
-    company: string
-    latitude: string
-    longitude: string
-    name: string
-    countryCode: string
-    provinceCode: string
-    type?: $Enums.AddressType
-    Order?: OrderCreateNestedManyWithoutAddressInput
-  }
-
-  export type AddressUncheckedCreateWithoutCustomerInput = {
-    id?: string
-    firstName: string
-    address1: string
-    phone: string
-    city: string
-    zip: string
-    province: string
-    country: string
-    lastName: string
-    address2: string
-    company: string
-    latitude: string
-    longitude: string
-    name: string
-    countryCode: string
-    provinceCode: string
-    type?: $Enums.AddressType
-    Order?: OrderUncheckedCreateNestedManyWithoutAddressInput
-  }
-
-  export type AddressCreateOrConnectWithoutCustomerInput = {
-    where: AddressWhereUniqueInput
-    create: XOR<AddressCreateWithoutCustomerInput, AddressUncheckedCreateWithoutCustomerInput>
-  }
-
   export type OrderCreateWithoutCustomerInput = {
     id?: string
     externalGid: string
@@ -7254,7 +7247,7 @@ export namespace Prisma {
     currency: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    address: AddressCreateNestedOneWithoutOrderInput
+    shippingAddress: AddressCreateNestedOneWithoutOrderInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
   }
 
@@ -7263,7 +7256,7 @@ export namespace Prisma {
     externalGid: string
     totalAmount: number
     currency: string
-    addressId: string
+    shippingAddressId: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -7279,57 +7272,54 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AddressUpsertWithoutCustomerInput = {
-    update: XOR<AddressUpdateWithoutCustomerInput, AddressUncheckedUpdateWithoutCustomerInput>
+  export type AddressCreateWithoutCustomerInput = {
+    id?: string
+    firstName: string
+    address1: string
+    phone: string
+    city: string
+    zip: string
+    province: string
+    country: string
+    lastName: string
+    company: string
+    name: string
+    countryCode: string
+    provinceCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    addressType?: $Enums.AddressType
+    Order?: OrderCreateNestedManyWithoutShippingAddressInput
+  }
+
+  export type AddressUncheckedCreateWithoutCustomerInput = {
+    id?: string
+    firstName: string
+    address1: string
+    phone: string
+    city: string
+    zip: string
+    province: string
+    country: string
+    lastName: string
+    company: string
+    name: string
+    countryCode: string
+    provinceCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    addressType?: $Enums.AddressType
+    Order?: OrderUncheckedCreateNestedManyWithoutShippingAddressInput
+  }
+
+  export type AddressCreateOrConnectWithoutCustomerInput = {
+    where: AddressWhereUniqueInput
     create: XOR<AddressCreateWithoutCustomerInput, AddressUncheckedCreateWithoutCustomerInput>
-    where?: AddressWhereInput
   }
 
-  export type AddressUpdateToOneWithWhereWithoutCustomerInput = {
-    where?: AddressWhereInput
-    data: XOR<AddressUpdateWithoutCustomerInput, AddressUncheckedUpdateWithoutCustomerInput>
-  }
-
-  export type AddressUpdateWithoutCustomerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    address1?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    zip?: StringFieldUpdateOperationsInput | string
-    province?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    address2?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    latitude?: StringFieldUpdateOperationsInput | string
-    longitude?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    countryCode?: StringFieldUpdateOperationsInput | string
-    provinceCode?: StringFieldUpdateOperationsInput | string
-    type?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
-    Order?: OrderUpdateManyWithoutAddressNestedInput
-  }
-
-  export type AddressUncheckedUpdateWithoutCustomerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    address1?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    zip?: StringFieldUpdateOperationsInput | string
-    province?: StringFieldUpdateOperationsInput | string
-    country?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    address2?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    latitude?: StringFieldUpdateOperationsInput | string
-    longitude?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    countryCode?: StringFieldUpdateOperationsInput | string
-    provinceCode?: StringFieldUpdateOperationsInput | string
-    type?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
-    Order?: OrderUncheckedUpdateManyWithoutAddressNestedInput
+  export type AddressCreateManyCustomerInputEnvelope = {
+    data: AddressCreateManyCustomerInput | AddressCreateManyCustomerInput[]
+    skipDuplicates?: boolean
   }
 
   export type OrderUpsertWithWhereUniqueWithoutCustomerInput = {
@@ -7357,38 +7347,75 @@ export namespace Prisma {
     customerId?: StringFilter<"Order"> | string
     totalAmount?: FloatFilter<"Order"> | number
     currency?: StringFilter<"Order"> | string
-    addressId?: StringFilter<"Order"> | string
+    shippingAddressId?: StringFilter<"Order"> | string
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
   }
 
+  export type AddressUpsertWithWhereUniqueWithoutCustomerInput = {
+    where: AddressWhereUniqueInput
+    update: XOR<AddressUpdateWithoutCustomerInput, AddressUncheckedUpdateWithoutCustomerInput>
+    create: XOR<AddressCreateWithoutCustomerInput, AddressUncheckedCreateWithoutCustomerInput>
+  }
+
+  export type AddressUpdateWithWhereUniqueWithoutCustomerInput = {
+    where: AddressWhereUniqueInput
+    data: XOR<AddressUpdateWithoutCustomerInput, AddressUncheckedUpdateWithoutCustomerInput>
+  }
+
+  export type AddressUpdateManyWithWhereWithoutCustomerInput = {
+    where: AddressScalarWhereInput
+    data: XOR<AddressUpdateManyMutationInput, AddressUncheckedUpdateManyWithoutCustomerInput>
+  }
+
+  export type AddressScalarWhereInput = {
+    AND?: AddressScalarWhereInput | AddressScalarWhereInput[]
+    OR?: AddressScalarWhereInput[]
+    NOT?: AddressScalarWhereInput | AddressScalarWhereInput[]
+    id?: StringFilter<"Address"> | string
+    firstName?: StringFilter<"Address"> | string
+    address1?: StringFilter<"Address"> | string
+    phone?: StringFilter<"Address"> | string
+    city?: StringFilter<"Address"> | string
+    zip?: StringFilter<"Address"> | string
+    province?: StringFilter<"Address"> | string
+    country?: StringFilter<"Address"> | string
+    lastName?: StringFilter<"Address"> | string
+    company?: StringFilter<"Address"> | string
+    name?: StringFilter<"Address"> | string
+    countryCode?: StringFilter<"Address"> | string
+    provinceCode?: StringFilter<"Address"> | string
+    createdAt?: DateTimeFilter<"Address"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Address"> | Date | string | null
+    addressType?: EnumAddressTypeFilter<"Address"> | $Enums.AddressType
+    customerId?: StringNullableFilter<"Address"> | string | null
+  }
+
   export type CustomerCreateWithoutAddressInput = {
     id?: string
-    userId: string
     email: string
-    createdAt: string
-    updatedAt: string
     firstName: string
     lastName: string
     state: string
     verifiedEmail: boolean
-    phone: string
-    currency: string
+    phone?: string | null
+    currency?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
     Order?: OrderCreateNestedManyWithoutCustomerInput
   }
 
   export type CustomerUncheckedCreateWithoutAddressInput = {
     id?: string
-    userId: string
     email: string
-    createdAt: string
-    updatedAt: string
     firstName: string
     lastName: string
     state: string
     verifiedEmail: boolean
-    phone: string
-    currency: string
+    phone?: string | null
+    currency?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
     Order?: OrderUncheckedCreateNestedManyWithoutCustomerInput
   }
 
@@ -7397,7 +7424,7 @@ export namespace Prisma {
     create: XOR<CustomerCreateWithoutAddressInput, CustomerUncheckedCreateWithoutAddressInput>
   }
 
-  export type OrderCreateWithoutAddressInput = {
+  export type OrderCreateWithoutShippingAddressInput = {
     id?: string
     externalGid: string
     totalAmount: number
@@ -7408,7 +7435,7 @@ export namespace Prisma {
     items?: OrderItemCreateNestedManyWithoutOrderInput
   }
 
-  export type OrderUncheckedCreateWithoutAddressInput = {
+  export type OrderUncheckedCreateWithoutShippingAddressInput = {
     id?: string
     externalGid: string
     customerId: string
@@ -7419,13 +7446,13 @@ export namespace Prisma {
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
   }
 
-  export type OrderCreateOrConnectWithoutAddressInput = {
+  export type OrderCreateOrConnectWithoutShippingAddressInput = {
     where: OrderWhereUniqueInput
-    create: XOR<OrderCreateWithoutAddressInput, OrderUncheckedCreateWithoutAddressInput>
+    create: XOR<OrderCreateWithoutShippingAddressInput, OrderUncheckedCreateWithoutShippingAddressInput>
   }
 
-  export type OrderCreateManyAddressInputEnvelope = {
-    data: OrderCreateManyAddressInput | OrderCreateManyAddressInput[]
+  export type OrderCreateManyShippingAddressInputEnvelope = {
+    data: OrderCreateManyShippingAddressInput | OrderCreateManyShippingAddressInput[]
     skipDuplicates?: boolean
   }
 
@@ -7442,48 +7469,46 @@ export namespace Prisma {
 
   export type CustomerUpdateWithoutAddressInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    createdAt?: StringFieldUpdateOperationsInput | string
-    updatedAt?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
     verifiedEmail?: BoolFieldUpdateOperationsInput | boolean
-    phone?: StringFieldUpdateOperationsInput | string
-    currency?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Order?: OrderUpdateManyWithoutCustomerNestedInput
   }
 
   export type CustomerUncheckedUpdateWithoutAddressInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    createdAt?: StringFieldUpdateOperationsInput | string
-    updatedAt?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
     verifiedEmail?: BoolFieldUpdateOperationsInput | boolean
-    phone?: StringFieldUpdateOperationsInput | string
-    currency?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Order?: OrderUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
-  export type OrderUpsertWithWhereUniqueWithoutAddressInput = {
+  export type OrderUpsertWithWhereUniqueWithoutShippingAddressInput = {
     where: OrderWhereUniqueInput
-    update: XOR<OrderUpdateWithoutAddressInput, OrderUncheckedUpdateWithoutAddressInput>
-    create: XOR<OrderCreateWithoutAddressInput, OrderUncheckedCreateWithoutAddressInput>
+    update: XOR<OrderUpdateWithoutShippingAddressInput, OrderUncheckedUpdateWithoutShippingAddressInput>
+    create: XOR<OrderCreateWithoutShippingAddressInput, OrderUncheckedCreateWithoutShippingAddressInput>
   }
 
-  export type OrderUpdateWithWhereUniqueWithoutAddressInput = {
+  export type OrderUpdateWithWhereUniqueWithoutShippingAddressInput = {
     where: OrderWhereUniqueInput
-    data: XOR<OrderUpdateWithoutAddressInput, OrderUncheckedUpdateWithoutAddressInput>
+    data: XOR<OrderUpdateWithoutShippingAddressInput, OrderUncheckedUpdateWithoutShippingAddressInput>
   }
 
-  export type OrderUpdateManyWithWhereWithoutAddressInput = {
+  export type OrderUpdateManyWithWhereWithoutShippingAddressInput = {
     where: OrderScalarWhereInput
-    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutAddressInput>
+    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutShippingAddressInput>
   }
 
   export type OrderCreateWithoutItemsInput = {
@@ -7494,7 +7519,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     customer: CustomerCreateNestedOneWithoutOrderInput
-    address: AddressCreateNestedOneWithoutOrderInput
+    shippingAddress: AddressCreateNestedOneWithoutOrderInput
   }
 
   export type OrderUncheckedCreateWithoutItemsInput = {
@@ -7503,7 +7528,7 @@ export namespace Prisma {
     customerId: string
     totalAmount: number
     currency: string
-    addressId: string
+    shippingAddressId: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -7532,7 +7557,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     customer?: CustomerUpdateOneRequiredWithoutOrderNestedInput
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    shippingAddress?: AddressUpdateOneRequiredWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutItemsInput = {
@@ -7541,39 +7566,37 @@ export namespace Prisma {
     customerId?: StringFieldUpdateOperationsInput | string
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    shippingAddressId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type CustomerCreateWithoutOrderInput = {
     id?: string
-    userId: string
     email: string
-    createdAt: string
-    updatedAt: string
     firstName: string
     lastName: string
     state: string
     verifiedEmail: boolean
-    phone: string
-    currency: string
-    address: AddressCreateNestedOneWithoutCustomerInput
+    phone?: string | null
+    currency?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    Address?: AddressCreateNestedManyWithoutCustomerInput
   }
 
   export type CustomerUncheckedCreateWithoutOrderInput = {
     id?: string
-    userId: string
-    addressId: string
     email: string
-    createdAt: string
-    updatedAt: string
     firstName: string
     lastName: string
     state: string
     verifiedEmail: boolean
-    phone: string
-    currency: string
+    phone?: string | null
+    currency?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    Address?: AddressUncheckedCreateNestedManyWithoutCustomerInput
   }
 
   export type CustomerCreateOrConnectWithoutOrderInput = {
@@ -7591,14 +7614,13 @@ export namespace Prisma {
     province: string
     country: string
     lastName: string
-    address2: string
     company: string
-    latitude: string
-    longitude: string
     name: string
     countryCode: string
     provinceCode: string
-    type?: $Enums.AddressType
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    addressType?: $Enums.AddressType
     customer?: CustomerCreateNestedOneWithoutAddressInput
   }
 
@@ -7612,15 +7634,14 @@ export namespace Prisma {
     province: string
     country: string
     lastName: string
-    address2: string
     company: string
-    latitude: string
-    longitude: string
     name: string
     countryCode: string
     provinceCode: string
-    type?: $Enums.AddressType
-    customer?: CustomerUncheckedCreateNestedOneWithoutAddressInput
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    addressType?: $Enums.AddressType
+    customerId?: string | null
   }
 
   export type AddressCreateOrConnectWithoutOrderInput = {
@@ -7631,11 +7652,10 @@ export namespace Prisma {
   export type OrderItemCreateWithoutOrderInput = {
     id?: string
     externalLineId: string
-    name: string
+    title: string
     sku: string
     quantity: number
     price: number
-    currency: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7643,11 +7663,10 @@ export namespace Prisma {
   export type OrderItemUncheckedCreateWithoutOrderInput = {
     id?: string
     externalLineId: string
-    name: string
+    title: string
     sku: string
     quantity: number
     price: number
-    currency: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7675,32 +7694,30 @@ export namespace Prisma {
 
   export type CustomerUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    createdAt?: StringFieldUpdateOperationsInput | string
-    updatedAt?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
     verifiedEmail?: BoolFieldUpdateOperationsInput | boolean
-    phone?: StringFieldUpdateOperationsInput | string
-    currency?: StringFieldUpdateOperationsInput | string
-    address?: AddressUpdateOneRequiredWithoutCustomerNestedInput
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Address?: AddressUpdateManyWithoutCustomerNestedInput
   }
 
   export type CustomerUncheckedUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    createdAt?: StringFieldUpdateOperationsInput | string
-    updatedAt?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
     verifiedEmail?: BoolFieldUpdateOperationsInput | boolean
-    phone?: StringFieldUpdateOperationsInput | string
-    currency?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    currency?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Address?: AddressUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
   export type AddressUpsertWithoutOrderInput = {
@@ -7724,14 +7741,13 @@ export namespace Prisma {
     province?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    address2?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
-    latitude?: StringFieldUpdateOperationsInput | string
-    longitude?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     provinceCode?: StringFieldUpdateOperationsInput | string
-    type?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addressType?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
     customer?: CustomerUpdateOneWithoutAddressNestedInput
   }
 
@@ -7745,15 +7761,14 @@ export namespace Prisma {
     province?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    address2?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
-    latitude?: StringFieldUpdateOperationsInput | string
-    longitude?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     provinceCode?: StringFieldUpdateOperationsInput | string
-    type?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
-    customer?: CustomerUncheckedUpdateOneWithoutAddressNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addressType?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+    customerId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OrderItemUpsertWithWhereUniqueWithoutOrderInput = {
@@ -7779,11 +7794,10 @@ export namespace Prisma {
     id?: StringFilter<"OrderItem"> | string
     orderId?: StringFilter<"OrderItem"> | string
     externalLineId?: StringFilter<"OrderItem"> | string
-    name?: StringFilter<"OrderItem"> | string
+    title?: StringFilter<"OrderItem"> | string
     sku?: StringFilter<"OrderItem"> | string
     quantity?: IntFilter<"OrderItem"> | number
     price?: FloatFilter<"OrderItem"> | number
-    currency?: StringFilter<"OrderItem"> | string
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
   }
@@ -7793,9 +7807,28 @@ export namespace Prisma {
     externalGid: string
     totalAmount: number
     currency: string
-    addressId: string
+    shippingAddressId: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+  }
+
+  export type AddressCreateManyCustomerInput = {
+    id?: string
+    firstName: string
+    address1: string
+    phone: string
+    city: string
+    zip: string
+    province: string
+    country: string
+    lastName: string
+    company: string
+    name: string
+    countryCode: string
+    provinceCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    addressType?: $Enums.AddressType
   }
 
   export type OrderUpdateWithoutCustomerInput = {
@@ -7805,7 +7838,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    shippingAddress?: AddressUpdateOneRequiredWithoutOrderNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
   }
 
@@ -7814,7 +7847,7 @@ export namespace Prisma {
     externalGid?: StringFieldUpdateOperationsInput | string
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    shippingAddressId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -7825,12 +7858,71 @@ export namespace Prisma {
     externalGid?: StringFieldUpdateOperationsInput | string
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    shippingAddressId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type OrderCreateManyAddressInput = {
+  export type AddressUpdateWithoutCustomerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    address1?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    zip?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    countryCode?: StringFieldUpdateOperationsInput | string
+    provinceCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addressType?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+    Order?: OrderUpdateManyWithoutShippingAddressNestedInput
+  }
+
+  export type AddressUncheckedUpdateWithoutCustomerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    address1?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    zip?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    countryCode?: StringFieldUpdateOperationsInput | string
+    provinceCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addressType?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+    Order?: OrderUncheckedUpdateManyWithoutShippingAddressNestedInput
+  }
+
+  export type AddressUncheckedUpdateManyWithoutCustomerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    address1?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    zip?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    countryCode?: StringFieldUpdateOperationsInput | string
+    provinceCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    addressType?: EnumAddressTypeFieldUpdateOperationsInput | $Enums.AddressType
+  }
+
+  export type OrderCreateManyShippingAddressInput = {
     id?: string
     externalGid: string
     customerId: string
@@ -7840,7 +7932,7 @@ export namespace Prisma {
     updatedAt?: Date | string | null
   }
 
-  export type OrderUpdateWithoutAddressInput = {
+  export type OrderUpdateWithoutShippingAddressInput = {
     id?: StringFieldUpdateOperationsInput | string
     externalGid?: StringFieldUpdateOperationsInput | string
     totalAmount?: FloatFieldUpdateOperationsInput | number
@@ -7851,7 +7943,7 @@ export namespace Prisma {
     items?: OrderItemUpdateManyWithoutOrderNestedInput
   }
 
-  export type OrderUncheckedUpdateWithoutAddressInput = {
+  export type OrderUncheckedUpdateWithoutShippingAddressInput = {
     id?: StringFieldUpdateOperationsInput | string
     externalGid?: StringFieldUpdateOperationsInput | string
     customerId?: StringFieldUpdateOperationsInput | string
@@ -7862,7 +7954,7 @@ export namespace Prisma {
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   }
 
-  export type OrderUncheckedUpdateManyWithoutAddressInput = {
+  export type OrderUncheckedUpdateManyWithoutShippingAddressInput = {
     id?: StringFieldUpdateOperationsInput | string
     externalGid?: StringFieldUpdateOperationsInput | string
     customerId?: StringFieldUpdateOperationsInput | string
@@ -7875,11 +7967,10 @@ export namespace Prisma {
   export type OrderItemCreateManyOrderInput = {
     id?: string
     externalLineId: string
-    name: string
+    title: string
     sku: string
     quantity: number
     price: number
-    currency: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7887,11 +7978,10 @@ export namespace Prisma {
   export type OrderItemUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
     externalLineId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
-    currency?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7899,11 +7989,10 @@ export namespace Prisma {
   export type OrderItemUncheckedUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
     externalLineId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
-    currency?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7911,11 +8000,10 @@ export namespace Prisma {
   export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
     externalLineId?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
-    currency?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
