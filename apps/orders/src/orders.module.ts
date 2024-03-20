@@ -3,9 +3,7 @@ import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
-import { CustomersRepository } from './repositories/customers.repository';
 import { PrismaService } from './prisma.service';
-import { AddressesRepository } from './repositories/addresses.repository';
 import { OrdersRepository } from './repositories/orders.repository';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AUTH_SERVICE } from '@app/common';
@@ -37,12 +35,6 @@ import { AUTH_SERVICE } from '@app/common';
     ]),
   ],
   controllers: [OrdersController],
-  providers: [
-    OrdersService,
-    PrismaService,
-    AddressesRepository,
-    CustomersRepository,
-    OrdersRepository,
-  ],
+  providers: [OrdersService, PrismaService, OrdersRepository],
 })
 export class OrdersModule {}

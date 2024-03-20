@@ -33,8 +33,6 @@ export class OrdersRepository implements RepositoryInterface<Order.Entity> {
         items: { create: items },
       },
     });
-
-    console.log(created);
     return created;
   }
 
@@ -43,7 +41,6 @@ export class OrdersRepository implements RepositoryInterface<Order.Entity> {
   }
 
   delete(id: string): Promise<boolean> {
-    console.log(id);
-    throw new Error('Method not implemented.');
+    throw new Error(`Unable to delete order id ${id}: Method not implemented.`);
   }
 }
