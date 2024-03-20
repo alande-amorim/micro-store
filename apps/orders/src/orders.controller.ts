@@ -1,17 +1,18 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { Order, Shopify } from '@app/common';
+import { JwtAuthGuard, Order, Shopify } from '@app/common';
 
 @Controller()
 export class OrdersController {
   constructor(private service: OrdersService) {}
 
-  // @Get()
-  // getAll(): Promise<Order.Entity[]> {
-  //   return this.service.getAll();
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  getAll(): Promise<Order.Entity[]> {
+    return this.service.getAll();
+  }
 
   // @Get(':id')
   // async getById(@Param('id') id: string): Promise<Order.Entity> {

@@ -1,33 +1,21 @@
 import { Order } from '@app/common';
-import { Injectable } from '@nestjs/common';
-import { CustomersRepository } from './repositories/customers.repository';
-import { AddressesRepository } from './repositories/addresses.repository';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { OrdersRepository } from './repositories/orders.repository';
 import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
 export class OrdersService {
-  constructor(
-    private customerRepo: CustomersRepository,
-    private addressRepo: AddressesRepository,
-    private orderRepo: OrdersRepository,
-  ) {}
+  constructor(private repo: OrdersRepository) {}
 
-  // async handleWebhook2({
-  //   customer,
-  //   shippingAddress,
-  //   items,
-  //   ...data
-  // }: SyncOrderDto) {
-  //   const customerEntity = await this.customerRepo.getOrCreate(customer);
-  //   const shippingAddressEntity =
-  //     await this.addressRepo.create(shippingAddress);
-  // }
+  async getAll(): Promise<Order.Entity[]> {
+    return this.repo.list();
+  }
 
-  // async handleWebhook(data: SyncOrderDto) {
   async handleWebhook(data: CreateOrderDto): Promise<Order.Entity> {
-    const order = await this.orderRepo.create(data);
-    console.log(order);
-    return order;
+    const order = await this.repo.find(data);
+    if (order) {
+      throw new UnprocessableEntityException('Order already exists.');
+    }
+    return this.repo.create(data);
   }
 }

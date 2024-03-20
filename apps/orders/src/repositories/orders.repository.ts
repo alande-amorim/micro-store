@@ -12,6 +12,14 @@ export class OrdersRepository implements RepositoryInterface<Order.Entity> {
     return this.db.order.findMany();
   }
 
+  find(data: CreateOrderDto): Promise<Order.Entity | null> {
+    return this.db.order.findUnique({
+      where: {
+        externalGid: data.externalGid,
+      },
+    });
+  }
+
   get(id: string): Promise<Order.Entity> {
     return this.db.order.findUnique({ where: { id } });
   }

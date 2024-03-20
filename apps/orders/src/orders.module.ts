@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { CustomersRepository } from './repositories/customers.repository';
 import { PrismaService } from './prisma.service';
 import { AddressesRepository } from './repositories/addresses.repository';
 import { OrdersRepository } from './repositories/orders.repository';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { AUTH_SERVICE } from '@app/common';
 
 @Module({
   imports: [
@@ -16,8 +18,23 @@ import { OrdersRepository } from './repositories/orders.repository';
         TCP_PORT: Joi.number().required(),
         HTTP_PORT: Joi.number().required(),
         DATABASE_URL: Joi.string().required(),
+        AUTH_HOST: Joi.string().required(),
+        AUTH_PORT: Joi.number().required(),
       }),
     }),
+    ClientsModule.registerAsync([
+      {
+        name: AUTH_SERVICE,
+        useFactory: (conf: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: conf.get('AUTH_HOST'),
+            port: conf.get('AUTH_PORT'),
+          },
+        }),
+        inject: [ConfigService],
+      },
+    ]),
   ],
   controllers: [OrdersController],
   providers: [
