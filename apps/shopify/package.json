@@ -1,0 +1,14 @@
+{
+  "name": "@micro-store/shopify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "postinstall": ""
+  },
+  "author": "",
+  "license": "ISC"
+}

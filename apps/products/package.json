@@ -1,0 +1,14 @@
+{
+  "name": "@micro-store/products",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "postinstall": "npx prisma db push"
+  },
+  "author": "",
+  "license": "ISC"
+}
