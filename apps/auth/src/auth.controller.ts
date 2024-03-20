@@ -13,8 +13,8 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signup')
-  signup(@Body() body: SignupDto) {
-    return this.authService.signup(body);
+  async signup(@Body() body: SignupDto) {
+    return await this.authService.signup(body);
   }
 
   @UseGuards(LocalAuthGuard)

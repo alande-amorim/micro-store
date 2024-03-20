@@ -1,12 +1,13 @@
 import {
   Inject,
   Injectable,
+  RequestTimeoutException,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Product, SHOPIFY_SERVICE, makeSlug } from '@app/common';
 import { PrismaService } from './prisma.service';
 import { ClientProxy } from '@nestjs/microservices';
-import { map } from 'rxjs';
+import { TimeoutError, catchError, map, throwError, timeout } from 'rxjs';
 
 @Injectable()
 export class ProductsService {
@@ -55,11 +56,12 @@ export class ProductsService {
     return this.shopifyClient
       .send('updateProduct', { ...product, ...data })
       .pipe(
-        map(() => {
-          return this.db.product.update({
-            where: { id: product.id },
-            data,
-          });
+        timeout(5000),
+        catchError((err) => {
+          if (err instanceof TimeoutError) {
+            return throwError(() => new RequestTimeoutException());
+          }
+          return throwError(() => err);
         }),
       );
   }
@@ -69,10 +71,12 @@ export class ProductsService {
     if (!product) throw new UnprocessableEntityException('Product not found');
 
     return this.shopifyClient.send('deleteProduct', product).pipe(
-      map(() => {
-        return this.db.product.delete({
-          where: { id: product.id },
-        });
+      timeout(5000),
+      catchError((err) => {
+        if (err instanceof TimeoutError) {
+          return throwError(() => new RequestTimeoutException());
+        }
+        return throwError(() => err);
       }),
     );
   }

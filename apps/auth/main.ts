@@ -5,12 +5,20 @@ import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 import { Transport } from '@nestjs/microservices';
+import { initSentry } from '@app/common/monitor/sentry';
+import { RpcExceptionsFilter, HttpExceptionFilter } from '@app/common/filters';
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthModule);
   const conf = app.get(ConfigService);
+  initSentry(conf.get('SENTRY_DSN'));
 
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(
+    new HttpExceptionFilter('AUTH_SERVICE'),
+    new RpcExceptionsFilter('AUTH_SERVICE'),
+  );
+
   app.use(cookieParser());
   app.connectMicroservice({
     transport: Transport.RMQ,
