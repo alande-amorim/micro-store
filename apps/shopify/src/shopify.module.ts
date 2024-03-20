@@ -4,7 +4,7 @@ import { ShopifyService } from './shopify.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { createShopifyGraphqlSdkClient } from './clients/shopify-graphql-sdk.client';
-import { GraphqlProductsRepository } from './repositories/graphqlProducts.repository';
+import { GraphqlProductsRepository } from './repositories/graphql-products.repository';
 
 @Module({
   imports: [

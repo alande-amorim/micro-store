@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Product } from '@app/common';
-import { GraphqlProductsRepository } from './repositories/graphqlProducts.repository';
+import { GraphqlProductsRepository } from './repositories/graphql-products.repository';
 
 @Injectable()
 export class ShopifyService {

@@ -1,5 +1,5 @@
 import { Product } from '@app/common';
-import { ProductsRepositoryInterface } from '.';
+import { ProductsRepositoryInterface } from './interfaces/products-repository.interface';
 import { flatProduct } from '../utils/flatten-product';
 import { Inject, Injectable } from '@nestjs/common';
 import { Sdk, Product as GraphProduct } from '../graphql';
@@ -75,7 +75,6 @@ export class GraphqlProductsRepository implements ProductsRepositoryInterface {
   }
 
   async delete(ourProduct: Product.Entity): Promise<string> {
-    console.log(ourProduct);
     const matchingProduct = await this.get(ourProduct);
 
     const {
@@ -83,7 +82,6 @@ export class GraphqlProductsRepository implements ProductsRepositoryInterface {
     } = await this.sdk.ProductDelete({
       input: { id: matchingProduct.productId },
     });
-    console.log(productDelete);
     return productDelete.deletedProductId;
   }
 }
