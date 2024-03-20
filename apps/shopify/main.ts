@@ -8,12 +8,13 @@ async function bootstrap() {
   const conf = app.get(ConfigService);
 
   app.connectMicroservice({
-    transport: Transport.TCP,
+    transport: Transport.RMQ,
     options: {
-      host: '0.0.0.0',
-      port: conf.get('TCP_PORT'),
+      urls: [conf.getOrThrow('RABBITMQ_URI')],
+      queue: 'shopify',
     },
   });
+
   await app.startAllMicroservices();
 
   app.listen(conf.get('HTTP_PORT'), () => {

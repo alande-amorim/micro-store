@@ -13,10 +13,10 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
   app.connectMicroservice({
-    transport: Transport.TCP,
+    transport: Transport.RMQ,
     options: {
-      host: '0.0.0.0',
-      port: conf.get('TCP_PORT'),
+      urls: [conf.getOrThrow('RABBITMQ_URI')],
+      queue: 'auth',
     },
   });
 

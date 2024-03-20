@@ -24,10 +24,10 @@ import { AUTH_SERVICE } from '@app/common';
       {
         name: AUTH_SERVICE,
         useFactory: (conf: ConfigService) => ({
-          transport: Transport.TCP,
+          transport: Transport.RMQ,
           options: {
-            host: conf.get('AUTH_HOST'),
-            port: conf.get('AUTH_PORT'),
+            urls: [conf.getOrThrow<string>('RABBITMQ_URI')],
+            queue: 'auth',
           },
         }),
         inject: [ConfigService],

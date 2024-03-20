@@ -26,10 +26,10 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       {
         name: ORDERS_SERVICE,
         useFactory: (conf: ConfigService) => ({
-          transport: Transport.TCP,
+          transport: Transport.RMQ,
           options: {
-            host: conf.get('ORDERS_HOST'),
-            port: conf.get('ORDERS_PORT'),
+            urls: [conf.getOrThrow<string>('RABBITMQ_URI')],
+            queue: 'orders',
           },
         }),
         inject: [ConfigService],
