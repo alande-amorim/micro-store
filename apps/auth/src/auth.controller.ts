@@ -25,6 +25,7 @@ export class AuthController {
     @Res() res: Response,
   ): Promise<void> {
     const jwt = await this.authService.signin(user, res);
+    console.log(jwt);
     res.send(jwt);
   }
 
