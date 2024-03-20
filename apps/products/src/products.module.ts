@@ -28,7 +28,7 @@ import { AUTH_SERVICE, SHOPIFY_SERVICE } from '@app/common';
           transport: Transport.TCP,
           options: {
             host: conf.get('AUTH_HOST'),
-            port: 53000,
+            port: conf.get('AUTH_PORT'),
           },
         }),
         inject: [ConfigService],
