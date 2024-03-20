@@ -14,6 +14,6 @@ async function bootstrap() {
       port: conf.get('TCP_PORT'),
     },
   });
-  app.startAllMicroservices();
+  await app.startAllMicroservices();
 }
 bootstrap();

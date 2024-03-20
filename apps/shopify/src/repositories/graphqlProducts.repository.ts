@@ -1,6 +1,6 @@
 import { Product } from '@app/common';
 import { ProductsRepositoryInterface } from '.';
-import { flatProduct } from '../utils/flattenProduct';
+import { flatProduct } from '../utils/flatten-product';
 import { Inject, Injectable } from '@nestjs/common';
 import { Sdk, Product as GraphProduct } from '../graphql';
 
@@ -14,13 +14,14 @@ export class GraphqlProductsRepository implements ProductsRepositoryInterface {
   }
 
   async get(ourProduct: Product.Entity): Promise<Product.External> {
+    console.log(ourProduct);
     const {
-      data: { productByHandle },
-    } = await this.sdk.GetProductByHandle({
-      handle: ourProduct.slug,
+      data: { product },
+    } = await this.sdk.GetProductById({
+      id: ourProduct.externalId,
     });
 
-    return flatProduct(productByHandle as GraphProduct);
+    return product ? flatProduct(product as GraphProduct) : null;
   }
 
   async create(ourProduct: Product.Entity): Promise<Product.External> {
@@ -41,11 +42,13 @@ export class GraphqlProductsRepository implements ProductsRepositoryInterface {
       },
     });
 
-    return flatProduct(productCreate.product as GraphProduct);
+    const product = productCreate.product as GraphProduct;
+    return product ? flatProduct(product) : null;
   }
 
   async update(ourProduct: Product.Entity): Promise<Product.External> {
     const matchingProduct = await this.get(ourProduct);
+    console.log(matchingProduct);
 
     const {
       data: { productCreate },
@@ -67,10 +70,12 @@ export class GraphqlProductsRepository implements ProductsRepositoryInterface {
       },
     });
 
-    return flatProduct(productCreate.product as GraphProduct);
+    const product = productCreate.product as GraphProduct;
+    return product ? flatProduct(product) : null;
   }
 
   async delete(ourProduct: Product.Entity): Promise<string> {
+    console.log(ourProduct);
     const matchingProduct = await this.get(ourProduct);
 
     const {
@@ -78,7 +83,7 @@ export class GraphqlProductsRepository implements ProductsRepositoryInterface {
     } = await this.sdk.ProductDelete({
       input: { id: matchingProduct.productId },
     });
-
+    console.log(productDelete);
     return productDelete.deletedProductId;
   }
 }

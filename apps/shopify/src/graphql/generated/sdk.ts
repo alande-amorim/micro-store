@@ -26049,7 +26049,7 @@ export type Mutation = {
   paymentTermsDelete?: Maybe<PaymentTermsDeletePayload>;
   /** Update payment terms on an order. To update payment terms on a draft order, use a draft order mutation and include the request with the `DraftOrderInput`. */
   paymentTermsUpdate?: Maybe<PaymentTermsUpdatePayload>;
-  /** Creates a price list. You can use the `priceListCreate` mutation to create a new price list for a country. This enables you to sell your products with international pricing. */
+  /** Creates a price list. You can use the `priceListCreate` mutation to create a new price list and associate it with a catalog. This enables you to sell your products with contextual pricing. */
   priceListCreate?: Maybe<PriceListCreatePayload>;
   /** Deletes a price list. For example, you can delete a price list so that it no longer applies for products in the associated market. */
   priceListDelete?: Maybe<PriceListDeletePayload>;
@@ -49930,13 +49930,6 @@ export type ProductCreateMutationVariables = Exact<{
 
 export type ProductCreateMutation = { __typename?: 'Mutation', productCreate?: { __typename?: 'ProductCreatePayload', product?: { __typename?: 'Product', id: string, title: string, handle: string, description: string, descriptionHtml: any, status: ProductStatus, updatedAt: any, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', price: any }> } } | null, userErrors: Array<{ __typename?: 'UserError', field?: Array<string> | null, message: string }> } | null };
 
-export type ProductDeleteAsyncMutationVariables = Exact<{
-  productId: Scalars['ID']['input'];
-}>;
-
-
-export type ProductDeleteAsyncMutation = { __typename?: 'Mutation', productDeleteAsync?: { __typename?: 'ProductDeleteAsyncPayload', deleteProductId?: string | null, job?: { __typename?: 'Job', done: boolean, id: string } | null, userErrors: Array<{ __typename?: 'ProductDeleteUserError', code?: ProductDeleteUserErrorCode | null, field?: Array<string> | null, message: string }> } | null };
-
 export type ProductDeleteMutationVariables = Exact<{
   input: ProductDeleteInput;
 }>;
@@ -49957,6 +49950,13 @@ export type GetProductByHandleQueryVariables = Exact<{
 
 
 export type GetProductByHandleQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', id: string, title: string, handle: string, description: string, publishedAt?: any | null, updatedAt: any, createdAt: any, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', id: string, price: any, sku?: string | null }> } } | null };
+
+export type GetProductByIdQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetProductByIdQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, title: string, handle: string, description: string, publishedAt?: any | null, updatedAt: any, createdAt: any, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', id: string, price: any, sku?: string | null }> } } | null };
 
 export type GetProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -49982,22 +49982,6 @@ export const ProductCreateDocument = gql`
       }
     }
     userErrors {
-      field
-      message
-    }
-  }
-}
-    `;
-export const ProductDeleteAsyncDocument = gql`
-    mutation ProductDeleteAsync($productId: ID!) {
-  productDeleteAsync(productId: $productId) {
-    deleteProductId
-    job {
-      done
-      id
-    }
-    userErrors {
-      code
       field
       message
     }
@@ -50042,6 +50026,26 @@ export const ProductUpdateDocument = gql`
 export const GetProductByHandleDocument = gql`
     query GetProductByHandle($handle: String!) {
   productByHandle(handle: $handle) {
+    id
+    title
+    handle
+    description
+    publishedAt
+    updatedAt
+    createdAt
+    variants(first: 1) {
+      nodes {
+        id
+        price
+        sku
+      }
+    }
+  }
+}
+    `;
+export const GetProductByIdDocument = gql`
+    query GetProductById($id: ID!) {
+  product(id: $id) {
     id
     title
     handle
@@ -50140,18 +50144,15 @@ export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, str
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType, _variables) => action();
 const ProductCreateDocumentString = print(ProductCreateDocument);
-const ProductDeleteAsyncDocumentString = print(ProductDeleteAsyncDocument);
 const ProductDeleteDocumentString = print(ProductDeleteDocument);
 const ProductUpdateDocumentString = print(ProductUpdateDocument);
 const GetProductByHandleDocumentString = print(GetProductByHandleDocument);
+const GetProductByIdDocumentString = print(GetProductByIdDocument);
 const GetProductsDocumentString = print(GetProductsDocument);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
     ProductCreate(variables: ProductCreateMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ProductCreateMutation; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<ProductCreateMutation>(ProductCreateDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ProductCreate', 'mutation', variables);
-    },
-    ProductDeleteAsync(variables: ProductDeleteAsyncMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ProductDeleteAsyncMutation; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
-        return withWrapper((wrappedRequestHeaders) => client.rawRequest<ProductDeleteAsyncMutation>(ProductDeleteAsyncDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ProductDeleteAsync', 'mutation', variables);
     },
     ProductDelete(variables: ProductDeleteMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ProductDeleteMutation; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<ProductDeleteMutation>(ProductDeleteDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ProductDelete', 'mutation', variables);
@@ -50161,6 +50162,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetProductByHandle(variables: GetProductByHandleQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetProductByHandleQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetProductByHandleQuery>(GetProductByHandleDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductByHandle', 'query', variables);
+    },
+    GetProductById(variables: GetProductByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetProductByIdQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetProductByIdQuery>(GetProductByIdDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductById', 'query', variables);
     },
     GetProducts(variables?: GetProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetProductsQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetProductsQuery>(GetProductsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProducts', 'query', variables);

@@ -1,0 +1,18 @@
+query Product($id: ID!) {
+  product(id: $id) {
+    id
+    title
+    handle
+    description
+    publishedAt
+    updatedAt
+    createdAt
+    variants(first: 1) {
+      nodes {
+        id
+        price
+        sku
+      }
+    }
+  }
+}

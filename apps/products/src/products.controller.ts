@@ -32,22 +32,19 @@ export class ProductsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() product: CreateProductDto): Promise<Product.Entity> {
-    return this.service.create(product);
+  async create(@Body() product: CreateProductDto): Promise<unknown> {
+    return await this.service.create(product);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() product: UpdateProductDto,
-  ): Promise<Product.Entity> {
-    return this.service.update(id, product);
+  async update(@Param('id') id: string, @Body() product: UpdateProductDto) {
+    return await this.service.update(id, product);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  delete(@Param('id') id: string): Promise<boolean> {
-    return this.service.delete(id);
+  async delete(@Param('id') id: string) {
+    return await this.service.delete(id);
   }
 }

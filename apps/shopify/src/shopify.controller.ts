@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ShopifyService } from './shopify.service';
 import { Product } from '@app/common';
@@ -17,23 +17,19 @@ export class ShopifyController {
     return this.service.getProduct(data);
   }
 
-  @MessagePattern('createPoduct')
-  async createProduct(@Payload() data: Product.Entity): Promise<unknown> {
-    const response = await this.service.createProduct(data);
-    console.log(response);
-    return response;
+  @MessagePattern('createProduct')
+  @UsePipes(new ValidationPipe())
+  createProduct(@Payload() data: Product.Entity): Promise<unknown> {
+    return this.service.createProduct(data);
   }
 
-  @MessagePattern('updatePoduct')
-  async updateProduct(@Payload() data: Product.Entity): Promise<unknown> {
-    const response = await this.service.createProduct(data);
-    console.log(response);
-    return response;
+  @MessagePattern('updateProduct')
+  updateProduct(@Payload() data: Product.Entity): Promise<unknown> {
+    return this.service.createProduct(data);
   }
 
+  @MessagePattern('deleteProduct')
   async deleteProduct(@Payload() data: Product.Entity): Promise<unknown> {
-    const response = await this.service.createProduct(data);
-    console.log(response);
-    return response;
+    return await this.service.deleteProduct(data);
   }
 }

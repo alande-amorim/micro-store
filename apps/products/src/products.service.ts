@@ -1,10 +1,19 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
-import { Product, makeSlug } from '@app/common';
+import {
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
+import { Product, SHOPIFY_SERVICE, makeSlug } from '@app/common';
 import { PrismaService } from './prisma.service';
+import { ClientProxy } from '@nestjs/microservices';
+import { map } from 'rxjs';
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly db: PrismaService) {}
+  constructor(
+    @Inject(SHOPIFY_SERVICE) private readonly shopifyClient: ClientProxy,
+    private readonly db: PrismaService,
+  ) {}
 
   async getAll(): Promise<Product.Entity[] | never> {
     return this.db.product.findMany();
@@ -20,26 +29,51 @@ export class ProductsService {
       slug: slug || makeSlug(input.name),
     };
 
-    const product = await this.db.product.findFirst({
+    const exists = await this.db.product.findFirst({
       where: { OR: [{ slug: payload.slug }, { sku: payload.sku }] },
     });
-    if (product) {
+    if (exists) {
       throw new UnprocessableEntityException('Slug or SKU already taken.');
     }
 
-    return this.db.product.create({ data: payload });
+    const product = await this.db.product.create({ data: payload });
+
+    return this.shopifyClient.send('createProduct', product).pipe(
+      map(async (res) => {
+        return await this.db.product.update({
+          where: { id: product.id },
+          data: { externalId: res.productId },
+        });
+      }),
+    );
   }
 
-  async update(id: string, data: Product.Update): Promise<Product.Entity> {
-    return this.db.product.update({
-      where: { id },
-      data,
-    });
+  async update(id: string, data: Product.Update) {
+    const product = await this.getById(id);
+    if (!product) throw new UnprocessableEntityException('Product not found');
+
+    return this.shopifyClient
+      .send('updateProduct', { ...product, ...data })
+      .pipe(
+        map(() => {
+          return this.db.product.update({
+            where: { id: product.id },
+            data,
+          });
+        }),
+      );
   }
 
-  async delete(id: string): Promise<boolean | never> {
-    const deleted = await this.db.product.delete({ where: { id } });
-    if (!deleted) throw new UnprocessableEntityException('Product not found');
-    return true;
+  async delete(id: string) {
+    const product = await this.getById(id);
+    if (!product) throw new UnprocessableEntityException('Product not found');
+
+    return this.shopifyClient.send('deleteProduct', product).pipe(
+      map(() => {
+        return this.db.product.delete({
+          where: { id: product.id },
+        });
+      }),
+    );
   }
 }

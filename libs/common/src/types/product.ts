@@ -10,6 +10,7 @@ export namespace Product {
     price: number;
     salePrice?: number;
     description?: string;
+    externalId?: string;
   };
 
   export type Entity = DbEntity & Required<Model, 'slug'>;
