@@ -2,15 +2,19 @@ import { NestFactory } from '@nestjs/core';
 import { ShopifyModule } from './src/shopify.module';
 import { ConfigService } from '@nestjs/config';
 import { Transport } from '@nestjs/microservices';
+import { AllExceptionsFilter } from './src/all-errors.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(ShopifyModule);
   const conf = app.get(ConfigService);
 
+  app.useGlobalFilters(new AllExceptionsFilter());
+
   app.connectMicroservice({
     transport: Transport.RMQ,
     options: {
       urls: [conf.getOrThrow('RABBITMQ_URI')],
+      noAck: false,
       queue: 'shopify',
     },
   });

@@ -1,7 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UseFilters } from '@nestjs/common';
 import { ORDERS_SERVICE, Product, Shopify } from '@app/common';
 import { GraphqlProductsRepository } from './repositories/graphql-products.repository';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { RpcExceptionFilter } from '@app/common/filters';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable()
 export class ShopifyService {
@@ -30,7 +32,12 @@ export class ShopifyService {
     return await this.repo.delete(data);
   }
 
-  handleWebhook(data: Shopify.Order.Created) {
-    return this.ordersClient.send('webhook', data);
+  @UseFilters(RpcExceptionFilter)
+  async handleWebhook(data: Shopify.Order.Created) {
+    return await this.ordersClient.send('webhook', data).pipe(
+      catchError((error) => {
+        return throwError(() => new RpcException(error));
+      }),
+    );
   }
 }

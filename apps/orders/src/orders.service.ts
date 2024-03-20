@@ -13,9 +13,7 @@ export class OrdersService {
 
   async handleWebhook(data: CreateOrderDto): Promise<Order.Entity> {
     const order = await this.repo.find(data);
-    if (order) {
-      throw new UnprocessableEntityException('Order already exists.');
-    }
+    if (order) throw new UnprocessableEntityException('Order already exists');
     return this.repo.create(data);
   }
 }

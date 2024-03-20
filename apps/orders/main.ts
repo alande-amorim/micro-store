@@ -5,17 +5,20 @@ import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import { Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { RpcExceptionFilter } from '@app/common/filters';
 
 async function bootstrap() {
   const app = await NestFactory.create(OrdersModule);
   const conf = app.get(ConfigService);
 
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new RpcExceptionFilter());
   app.use(cookieParser());
   app.connectMicroservice({
     transport: Transport.RMQ,
     options: {
       urls: [conf.getOrThrow('RABBITMQ_URI')],
+      noAck: false,
       queue: 'orders',
     },
   });

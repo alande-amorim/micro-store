@@ -16,6 +16,7 @@ async function bootstrap() {
     transport: Transport.RMQ,
     options: {
       urls: [conf.getOrThrow('RABBITMQ_URI')],
+      noAck: false,
       queue: 'auth',
     },
   });

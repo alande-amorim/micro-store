@@ -1,6 +1,17 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  UnprocessableEntityException,
+  UseGuards,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException,
+} from '@nestjs/microservices';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { JwtAuthGuard, Order, Shopify } from '@app/common';
 
@@ -14,18 +25,23 @@ export class OrdersController {
     return this.service.getAll();
   }
 
-  // @Get(':id')
-  // async getById(@Param('id') id: string): Promise<Order.Entity> {
-  //   const order = await this.service.getById(id);
-  //   if (!order) throw new NotFoundException('Order id not found');
-  //   return order;
-  // }
-
   @MessagePattern('webhook')
   async handleWebhook(
     @Payload() data: Shopify.Order.Created,
+    @Ctx() context: RmqContext,
   ): Promise<Order.Entity> {
-    const dto = new CreateOrderDto(data);
-    return this.service.handleWebhook(dto);
+    try {
+      const dto = new CreateOrderDto(data);
+      return await this.service.handleWebhook(dto);
+    } catch (error) {
+      const channel = context.getChannelRef();
+      const originalMsg = context.getMessage();
+
+      if (error instanceof UnprocessableEntityException) {
+        channel.ack(originalMsg);
+      }
+
+      throw new RpcException(error);
+    }
   }
 }
