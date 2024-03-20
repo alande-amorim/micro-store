@@ -119,11 +119,61 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = {
+exports.Prisma.CustomerScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
+  addressId: 'addressId',
   email: 'email',
-  password: 'password',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  state: 'state',
+  verifiedEmail: 'verifiedEmail',
+  phone: 'phone',
+  currency: 'currency'
+};
+
+exports.Prisma.AddressScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  address1: 'address1',
+  phone: 'phone',
+  city: 'city',
+  zip: 'zip',
+  province: 'province',
+  country: 'country',
+  lastName: 'lastName',
+  address2: 'address2',
+  company: 'company',
+  latitude: 'latitude',
+  longitude: 'longitude',
   name: 'name',
+  countryCode: 'countryCode',
+  provinceCode: 'provinceCode',
+  type: 'type'
+};
+
+exports.Prisma.OrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  externalLineId: 'externalLineId',
+  name: 'name',
+  sku: 'sku',
+  quantity: 'quantity',
+  price: 'price',
+  currency: 'currency',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  externalGid: 'externalGid',
+  customerId: 'customerId',
+  totalAmount: 'totalAmount',
+  currency: 'currency',
+  addressId: 'addressId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -142,10 +192,17 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.AddressType = exports.$Enums.AddressType = {
+  SHIPPING: 'SHIPPING',
+  BILLING: 'BILLING',
+  DEFAULT: 'DEFAULT'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  Customer: 'Customer',
+  Address: 'Address',
+  OrderItem: 'OrderItem',
+  Order: 'Order'
 };
 
 /**

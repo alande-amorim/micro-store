@@ -8,13 +8,87 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  password  String
-  name      String
-  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
-  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
+enum AddressType {
+  SHIPPING
+  BILLING
+  DEFAULT
+}
 
-  @@map("users")
+model Customer {
+  id            String  @id @default(uuid())
+  userId        String  @unique @map("user_id")
+  addressId     String  @unique @map("address_id")
+  email         String  @map("email")
+  createdAt     String  @map("created_at")
+  updatedAt     String  @map("updated_at")
+  firstName     String  @map("first_name")
+  lastName      String  @map("last_name")
+  state         String  @map("state")
+  verifiedEmail Boolean @map("verified_email")
+  phone         String  @map("phone")
+  currency      String  @map("currency")
+
+  address Address @relation(fields: [addressId], references: [id])
+  Order   Order[]
+
+  @@map("customers")
+}
+
+model Address {
+  id           String @id @default(uuid())
+  firstName    String @map("first_name")
+  address1     String @map("address1")
+  phone        String @map("phone")
+  city         String @map("city")
+  zip          String @map("zip")
+  province     String @map("province")
+  country      String @map("country")
+  lastName     String @map("last_name")
+  address2     String @map("address2")
+  company      String @map("company")
+  latitude     String @map("latitude")
+  longitude    String @map("longitude")
+  name         String @map("name")
+  countryCode  String @map("country_code")
+  provinceCode String @map("province_code")
+
+  type     AddressType @default(SHIPPING) @map("address_type")
+  customer Customer?
+  Order    Order[]
+
+  @@map("shipping_addresses")
+}
+
+model OrderItem {
+  id             String   @id @default(uuid())
+  orderId        String   @map("order_id")
+  externalLineId String   @map("external_line_gid")
+  name           String   @map("name")
+  sku            String   @map("sku")
+  quantity       Int      @map("quantity")
+  price          Float    @map("price")
+  currency       String   @map("currency")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(0)
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz(0)
+
+  Order Order @relation(fields: [orderId], references: [id])
+
+  @@map("order_items")
+}
+
+model Order {
+  id          String    @id @default(uuid())
+  externalGid String    @unique @map("external_gid") @db.VarChar(64)
+  customerId  String    @map("customer_id")
+  totalAmount Float     @map("total_amount")
+  currency    String    @map("currency")
+  addressId   String    @map("address_id")
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
+  updatedAt   DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
+
+  customer Customer    @relation(fields: [customerId], references: [id])
+  address  Address     @relation(fields: [addressId], references: [id])
+  items    OrderItem[]
+
+  @@map("orders")
 }

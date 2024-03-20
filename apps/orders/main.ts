@@ -23,15 +23,14 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Orders API')
     .setVersion('0.1')
-    .addTag('order')
+    .addTag('orders')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  app.startAllMicroservices();
-
+  await app.startAllMicroservices();
   await app.listen(conf.get('HTTP_PORT'), () => {
-    console.log(`Orders service is running on: ${conf.get('HTTP_PORT')}`);
+    console.log(`Orders service is running on ${conf.get('HTTP_PORT')}`);
   });
 }
 bootstrap();

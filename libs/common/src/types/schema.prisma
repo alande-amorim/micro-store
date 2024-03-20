@@ -76,18 +76,18 @@ model OrderItem {
 }
 
 model Order {
-  id                String    @id @default(uuid())
-  externalGid       String    @unique @map("external_gid") @db.VarChar(64)
-  customerId        String    @map("customer_id")
-  totalAmount       Float     @map("total_amount")
-  currency          String    @map("currency")
-  shippingAddressId String    @map("address_id")
-  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
-  updatedAt         DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
+  id          String    @id @default(uuid())
+  externalGid String    @unique @map("external_gid") @db.VarChar(64)
+  customerId  String    @map("customer_id")
+  totalAmount Float     @map("total_amount")
+  currency    String    @map("currency")
+  addressId   String    @map("address_id")
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(0)
+  updatedAt   DateTime? @updatedAt @map("updated_at") @db.Timestamptz(0)
 
-  customer        Customer    @relation(fields: [customerId], references: [id])
-  shippingAddress Address     @relation(fields: [shippingAddressId], references: [id])
-  items           OrderItem[]
+  customer Customer    @relation(fields: [customerId], references: [id])
+  address  Address     @relation(fields: [addressId], references: [id])
+  items    OrderItem[]
 
   @@map("orders")
 }
