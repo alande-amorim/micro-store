@@ -1,11 +1,23 @@
-import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ShopifyService } from './shopify.service';
 import { Product } from '@app/common';
+import { WebhookOrderCreatedDto } from './dto/webhook-order-created.dto';
 
 @Controller()
 export class ShopifyController {
   constructor(private service: ShopifyService) {}
+
+  @Post('webhook')
+  webhook(@Body() payload: WebhookOrderCreatedDto) {
+    return this.service.handleWebhook(payload);
+  }
 
   @MessagePattern('listProducts')
   async listProducts(): Promise<unknown> {

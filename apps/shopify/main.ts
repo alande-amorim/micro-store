@@ -15,5 +15,9 @@ async function bootstrap() {
     },
   });
   await app.startAllMicroservices();
+
+  app.listen(conf.get('HTTP_PORT'), () => {
+    console.log(`Shopify service is running on: ${conf.get('HTTP_PORT')}`);
+  });
 }
 bootstrap();

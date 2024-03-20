@@ -1,10 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { Product } from '@app/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ORDERS_SERVICE, Product } from '@app/common';
 import { GraphqlProductsRepository } from './repositories/graphql-products.repository';
+import { WebhookOrderCreatedDto } from './dto/webhook-order-created.dto';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class ShopifyService {
-  constructor(private repo: GraphqlProductsRepository) {}
+  constructor(
+    @Inject(ORDERS_SERVICE) private ordersClient: ClientProxy,
+    private repo: GraphqlProductsRepository,
+  ) {}
 
   async listProducts(): Promise<Product.External[]> {
     return await this.repo.list();
@@ -24,5 +29,9 @@ export class ShopifyService {
 
   async deleteProduct(data: Product.Entity): Promise<string> {
     return await this.repo.delete(data);
+  }
+
+  handleWebhook(payload: WebhookOrderCreatedDto) {
+    return this.ordersClient.send('webhook', payload);
   }
 }
