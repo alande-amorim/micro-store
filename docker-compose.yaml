@@ -6,8 +6,6 @@ services:
       args:
         - APP=auth
     restart: always
-    env_file:
-      - ./apps/auth/.env
     environment:
       - HTTP_PORT=3000
       - TCP_PORT=53000
@@ -25,6 +23,30 @@ services:
         condition: service_started
       rabbitmq:
         condition: service_healthy
+        
+  orders:
+    build:
+      context: .
+      args:
+        - APP=orders
+    restart: always
+    environment:
+      - HTTP_PORT=3002
+      - TCP_PORT=53002
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/orders?schema=public
+      - AUTH_HOST=auth
+      - AUTH_PORT=53000
+      - RABBITMQ_URI=amqp://rabbitmq:5672
+      - SENTRY_DSN=
+    command: sh -cx "npx prisma db push && node dist/apps/orders/main"
+    ports:
+      - 3002:3002
+      - 53002:53000
+    depends_on:
+      postgres:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
 
   postgres:
     image: postgres
@@ -33,7 +55,6 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: auth
 
   rabbitmq:
     build: ./rabbitmq
