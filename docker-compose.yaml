@@ -1,15 +1,49 @@
 version: '3.8'
 services:
+  auth:
+    build:
+      context: .
+      args:
+        - APP=auth
+    restart: always
+    env_file:
+      - ./apps/auth/.env
+    environment:
+      - HTTP_PORT=3000
+      - TCP_PORT=53000
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/auth?schema=public
+      - JWT_SECRET=eed1ce4063da37344c988c6c174a99ef6a804f0833855384d3738014d7c53296
+      - JWT_EXPIRATION=3600
+      - RABBITMQ_URI=amqp://rabbitmq:5672
+      - SENTRY_DSN=
+    command: sh -cx "npx prisma db push && node dist/apps/auth/main"
+    ports:
+      - 3000:3000
+      - 53000:53000
+    depends_on:
+      postgres:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+
   postgres:
     image: postgres
+    ports:
+      - 5433:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    ports:
-      - "5433:5432"
+      POSTGRES_DB: auth
+
   rabbitmq:
-    image: rabbitmq:3-management
+    build: ./rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - 5672:5672
+      - 15672:15672
+
+

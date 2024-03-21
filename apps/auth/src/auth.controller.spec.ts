@@ -6,10 +6,11 @@ import { Response } from 'express';
 import { User } from '@app/common';
 import { mockDeep } from 'jest-mock-extended';
 import { PrismaService } from './prisma.service';
-import { PrismaClient } from '../prisma/client';
+
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { SignupDto } from './dto/signup.dto';
+import { PrismaClient } from '@prisma/client';
 
 describe('AuthController', () => {
   let controller: AuthController;
