@@ -1,0 +1,1050 @@
+{
+	"info": {
+		"_postman_id": "94f44c9c-0944-49d8-ba80-cc7c938fe252",
+		"name": "Services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "975556"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Auth Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@example.com\",\n    \"name\": \"user\",\n    \"password\": \"Secret11!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:3000/auth/signup"
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"user\",\n    \"email\": \"user@example.com\",\n    \"password\": \"Secret11!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "localhost:3000/auth/signup"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "238"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ee-+0kR3LT3iSjmfVBmmQAWL6T4vr8\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:45:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"eafcc495-5a66-4815-aca9-41ed6cb32b32\",\n    \"email\": \"user@example.com\",\n    \"password\": \"$2a$10$MSjG4JdclKHe4djgJtcft.VOAm5nCde.p54ZK.xgyBxBAqIAAogVe\",\n    \"name\": \"user\",\n    \"createdAt\": \"2024-03-21T12:45:25.000Z\",\n    \"updatedAt\": \"2024-03-21T12:45:25.000Z\"\n}"
+						},
+						{
+							"name": "422",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"user\",\n    \"email\": \"user2@example.com\",\n    \"password\": \"Secret11!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "localhost:3000/auth/signup"
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "355"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"163-Z854DjsDkC0R5ADOmxa/sW4IYnc\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 11:45:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": {\n        \"message\": \"Email address already in use.\",\n        \"error\": \"Unprocessable Entity\",\n        \"statusCode\": 422\n    },\n    \"status\": 422,\n    \"options\": {},\n    \"message\": \"Email address already in use.\",\n    \"name\": \"UnprocessableEntityException\",\n    \"meta\": {\n        \"origin\": \"AUTH_SERVICE\",\n        \"timestamp\": \"2024-03-21T11:45:59.485Z\",\n        \"path\": \"/auth/signup\",\n        \"sentryEventId\": \"a72feeaaa91a45cea39aab66c1e2e049\"\n    }\n}"
+						},
+						{
+							"name": "400",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"user\",\n    \"email\": \"user\",\n    \"password\": \"Secret11!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "localhost:3000/auth/signup"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "324"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"144-D+CbpiTh0Sp1rmXqVCPm4YLwUls\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:45:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": {\n        \"message\": [\n            \"email must be an email\"\n        ],\n        \"error\": \"Bad Request\",\n        \"statusCode\": 400\n    },\n    \"status\": 400,\n    \"options\": {},\n    \"message\": \"Bad Request Exception\",\n    \"name\": \"BadRequestException\",\n    \"meta\": {\n        \"origin\": \"AUTH_SERVICE\",\n        \"timestamp\": \"2024-03-21T12:45:46.998Z\",\n        \"path\": \"/auth/signup\",\n        \"sentryEventId\": \"b1a54c10227044cc9582fdf70d84177e\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Auth Me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/auth/me"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:3000/auth/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "238"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ee-+0kR3LT3iSjmfVBmmQAWL6T4vr8\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:52:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"eafcc495-5a66-4815-aca9-41ed6cb32b32\",\n    \"email\": \"user@example.com\",\n    \"password\": \"$2a$10$MSjG4JdclKHe4djgJtcft.VOAm5nCde.p54ZK.xgyBxBAqIAAogVe\",\n    \"name\": \"user\",\n    \"createdAt\": \"2024-03-21T12:45:25.000Z\",\n    \"updatedAt\": \"2024-03-21T12:45:25.000Z\"\n}"
+						},
+						{
+							"name": "401",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:3000/auth/me"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "279"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"117-Bg0BjekqVIR8GPu3UNopafnoO90\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:44:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": {\n        \"message\": \"Unauthorized\",\n        \"statusCode\": 401\n    },\n    \"status\": 401,\n    \"options\": {},\n    \"message\": \"Unauthorized\",\n    \"name\": \"UnauthorizedException\",\n    \"meta\": {\n        \"origin\": \"AUTH_SERVICE\",\n        \"timestamp\": \"2024-03-21T12:44:30.564Z\",\n        \"path\": \"/auth/me\",\n        \"sentryEventId\": \"282b6e5e96fb4731bb6d8aa0caa43e31\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Auth signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \n    \"email\": \"user@example.com\",\n    \"password\": \"Secret11!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/auth/signin"
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{  \n    \"email\": \"user2@example.com\",\n  \"password\": \"Secret11!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:3000/auth/signin"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "Authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyZjA1N2YwNi05ODgwLTRmYWUtOTRmNi0xZWFjZDkzZWFmZWMiLCJpYXQiOjE3MTEwMjMzNzAsImV4cCI6MTcxMTAyNjk3MH0.vb0-hLpI9etA9t_VdA57-se1443_SPfughNEfDBubio; Path=/; Expires=Thu, 21 Mar 2024 13:16:10 GMT; HttpOnly"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "192"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c0-AsZfBIPvMDgBNGREaLIL00pqEco\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:16:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyZjA1N2YwNi05ODgwLTRmYWUtOTRmNi0xZWFjZDkzZWFmZWMiLCJpYXQiOjE3MTEwMjMzNzAsImV4cCI6MTcxMTAyNjk3MH0.vb0-hLpI9etA9t_VdA57-se1443_SPfughNEfDBubio"
+						},
+						{
+							"name": "401",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{  \n    \"email\": \"invalid@example.com\",\n    \"password\": \"Secret11!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:3000/auth/signin"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "283"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11b-y1rlYqR8K/3LR3iV5XgBH9/CAsg\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:51:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": {\n        \"message\": \"Unauthorized\",\n        \"statusCode\": 401\n    },\n    \"status\": 401,\n    \"options\": {},\n    \"message\": \"Unauthorized\",\n    \"name\": \"UnauthorizedException\",\n    \"meta\": {\n        \"origin\": \"AUTH_SERVICE\",\n        \"timestamp\": \"2024-03-21T12:51:49.667Z\",\n        \"path\": \"/auth/signin\",\n        \"sentryEventId\": \"0b082645762044b88e5050534d93ec79\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Products list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/products"
+					},
+					"response": [
+						{
+							"name": "200 - empty",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:3001/products"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:53:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[]"
+						},
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:3001/products"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "483"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e3-Z92OQMcN53OeTaEW/U3YsMTFwoE\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 13:05:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"69ed821a-1af0-4c4a-a212-a143f7f8f99b\",\n        \"externalId\": null,\n        \"name\": \"New Product\",\n        \"slug\": \"new-product\",\n        \"sku\": \"9937451Z552X\",\n        \"price\": 100.75,\n        \"description\": null,\n        \"createdAt\": \"2024-03-21T12:55:41.000Z\",\n        \"updatedAt\": \"2024-03-21T12:55:41.000Z\"\n    },\n    {\n        \"id\": \"e0e02e39-6c7e-4170-adeb-e7434bb26591\",\n        \"externalId\": null,\n        \"name\": \"New Product-x\",\n        \"slug\": \"new-product-x\",\n        \"sku\": \"9937451Z552Z\",\n        \"price\": 100.75,\n        \"description\": null,\n        \"createdAt\": \"2024-03-21T13:04:31.000Z\",\n        \"updatedAt\": \"2024-03-21T13:04:31.000Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Products get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/products/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3b931e63-e4a5-401e-9317-b8b109f6cbc8"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3001/products/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3b931e63-e4a5-401e-9317-b8b109f6cbc8"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "353"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"161-dAUCwDGNKyZXZBqRPOQVLv/EemA\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:54:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": {\n        \"message\": \"Product id not found\",\n        \"error\": \"Not Found\",\n        \"statusCode\": 404\n    },\n    \"status\": 404,\n    \"options\": {},\n    \"message\": \"Product id not found\",\n    \"name\": \"NotFoundException\",\n    \"meta\": {\n        \"origin\": \"PRODUCTS_SERVICE\",\n        \"timestamp\": \"2024-03-21T12:54:07.777Z\",\n        \"path\": \"/products/3b931e63-e4a5-401e-9317-b8b109f6cbc8\",\n        \"sentryEventId\": \"d619d6855bd94d8480c95d21c65563ea\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Products create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Product-x\",\n    \"sku\": \"9937451Z552Z\",\n    \"price\": 100.75\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3001/products"
+					},
+					"response": [
+						{
+							"name": "403",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New Product - test edit 2\",\n    \"sku\": \"9937451Z552X\",\n    \"price\": 100.75\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:3001/products"
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "313"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"139-4dLw2cifHDUy3VLVBv9MmNe/IcE\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:54:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": {\n        \"message\": \"Forbidden resource\",\n        \"error\": \"Forbidden\",\n        \"statusCode\": 403\n    },\n    \"status\": 403,\n    \"options\": {},\n    \"message\": \"Forbidden resource\",\n    \"name\": \"ForbiddenException\",\n    \"meta\": {\n        \"origin\": \"PRODUCTS_SERVICE\",\n        \"timestamp\": \"2024-03-21T12:54:20.027Z\",\n        \"path\": \"/products\",\n        \"sentryEventId\": \"309d71e66c434086b5afb5d5e17dbd04\"\n    }\n}"
+						},
+						{
+							"name": "422",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New Product\",\n    \"sku\": \"9937451Z552X\",\n    \"price\": 100.75\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:3001/products"
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "350"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"15e-unIczOHBrw3ErRcxk4BwiMLi9cs\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 13:04:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": {\n        \"message\": \"Slug or SKU already taken.\",\n        \"error\": \"Unprocessable Entity\",\n        \"statusCode\": 422\n    },\n    \"status\": 422,\n    \"options\": {},\n    \"message\": \"Slug or SKU already taken.\",\n    \"name\": \"UnprocessableEntityException\",\n    \"meta\": {\n        \"origin\": \"PRODUCTS_SERVICE\",\n        \"timestamp\": \"2024-03-21T13:04:08.458Z\",\n        \"path\": \"/products\",\n        \"sentryEventId\": \"044e9334333d4544b1c2775df3391cfb\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Product update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Product - sale\",\n    \"price\": 1001.75\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/products/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3b931e63-e4a5-401e-9317-b8b109f6cbc8"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "403",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New Product - sale\",\n    \"price\": 1001.75\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/products/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3b931e63-e4a5-401e-9317-b8b109f6cbc8"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "350"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"15e-/IXseh6Djox/gXLih095Fs/Lvp8\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:54:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": {\n        \"message\": \"Forbidden resource\",\n        \"error\": \"Forbidden\",\n        \"statusCode\": 403\n    },\n    \"status\": 403,\n    \"options\": {},\n    \"message\": \"Forbidden resource\",\n    \"name\": \"ForbiddenException\",\n    \"meta\": {\n        \"origin\": \"PRODUCTS_SERVICE\",\n        \"timestamp\": \"2024-03-21T12:54:51.559Z\",\n        \"path\": \"/products/3b931e63-e4a5-401e-9317-b8b109f6cbc8\",\n        \"sentryEventId\": \"7e166354ffbe46cf9821b4522abf22f6\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Products delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/products/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "d92914dd-ed89-4986-9a20-96b4ff8584e7"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "403",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3001/products/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "d92914dd-ed89-4986-9a20-96b4ff8584e7"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "350"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"15e-Gu6W6T8nRw61biJZQQRCu0W1vj0\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:55:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": {\n        \"message\": \"Forbidden resource\",\n        \"error\": \"Forbidden\",\n        \"statusCode\": 403\n    },\n    \"status\": 403,\n    \"options\": {},\n    \"message\": \"Forbidden resource\",\n    \"name\": \"ForbiddenException\",\n    \"meta\": {\n        \"origin\": \"PRODUCTS_SERVICE\",\n        \"timestamp\": \"2024-03-21T12:55:01.439Z\",\n        \"path\": \"/products/d92914dd-ed89-4986-9a20-96b4ff8584e7\",\n        \"sentryEventId\": \"93653ca32ecc43408b74c57c0cf50197\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Orders list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3002"
+					},
+					"response": [
+						{
+							"name": "200 - empty",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:3002"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:16:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Shopify",
+			"item": [
+				{
+					"name": "shopify webhook",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 820982911946154508,\n  \"admin_graphql_api_id\": \"gid://shopify/Order/820982911946154508\",\n  \"app_id\": null,\n  \"browser_ip\": null,\n  \"buyer_accepts_marketing\": true,\n  \"cancel_reason\": \"customer\",\n  \"cancelled_at\": \"2021-12-31T19:00:00-05:00\",\n  \"cart_token\": null,\n  \"checkout_id\": null,\n  \"checkout_token\": null,\n  \"client_details\": null,\n  \"closed_at\": null,\n  \"confirmation_number\": null,\n  \"confirmed\": false,\n  \"contact_email\": \"jon@example.com\",\n  \"created_at\": \"2021-12-31T19:00:00-05:00\",\n  \"currency\": \"USD\",\n  \"current_subtotal_price\": \"398.00\",\n  \"current_subtotal_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"current_total_additional_fees_set\": null,\n  \"current_total_discounts\": \"0.00\",\n  \"current_total_discounts_set\": {\n    \"shop_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"current_total_duties_set\": null,\n  \"current_total_price\": \"398.00\",\n  \"current_total_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"current_total_tax\": \"0.00\",\n  \"current_total_tax_set\": {\n    \"shop_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"customer_locale\": \"en\",\n  \"device_id\": null,\n  \"discount_codes\": [\n\n  ],\n  \"email\": \"jon@example.com\",\n  \"estimated_taxes\": false,\n  \"financial_status\": \"voided\",\n  \"fulfillment_status\": \"pending\",\n  \"landing_site\": null,\n  \"landing_site_ref\": null,\n  \"location_id\": null,\n  \"merchant_of_record_app_id\": null,\n  \"name\": \"#9999\",\n  \"note\": null,\n  \"note_attributes\": [\n\n  ],\n  \"number\": 234,\n  \"order_number\": 1234,\n  \"order_status_url\": \"https://jsmith.myshopify.com/548380009/orders/123456abcd/authenticate?key=abcdefg\",\n  \"original_total_additional_fees_set\": null,\n  \"original_total_duties_set\": null,\n  \"payment_gateway_names\": [\n    \"visa\",\n    \"bogus\"\n  ],\n  \"phone\": null,\n  \"po_number\": null,\n  \"presentment_currency\": \"USD\",\n  \"processed_at\": null,\n  \"reference\": null,\n  \"referring_site\": null,\n  \"source_identifier\": null,\n  \"source_name\": \"web\",\n  \"source_url\": null,\n  \"subtotal_price\": \"388.00\",\n  \"subtotal_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"388.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"388.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"tags\": \"tag1, tag2\",\n  \"tax_exempt\": false,\n  \"tax_lines\": [\n\n  ],\n  \"taxes_included\": false,\n  \"test\": true,\n  \"token\": \"123456abcd\",\n  \"total_discounts\": \"20.00\",\n  \"total_discounts_set\": {\n    \"shop_money\": {\n      \"amount\": \"20.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"20.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"total_line_items_price\": \"398.00\",\n  \"total_line_items_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"total_outstanding\": \"398.00\",\n  \"total_price\": \"388.00\",\n  \"total_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"388.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"388.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"total_shipping_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"10.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"10.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"total_tax\": \"0.00\",\n  \"total_tax_set\": {\n    \"shop_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"total_tip_received\": \"0.00\",\n  \"total_weight\": 0,\n  \"updated_at\": \"2021-12-31T19:00:00-05:00\",\n  \"user_id\": null,\n  \"billing_address\": {\n    \"first_name\": \"Steve\",\n    \"address1\": \"123 Shipping Street\",\n    \"phone\": \"555-555-SHIP\",\n    \"city\": \"Shippington\",\n    \"zip\": \"40003\",\n    \"province\": \"Kentucky\",\n    \"country\": \"United States\",\n    \"last_name\": \"Shipper\",\n    \"address2\": null,\n    \"company\": \"Shipping Company\",\n    \"latitude\": null,\n    \"longitude\": null,\n    \"name\": \"Steve Shipper\",\n    \"country_code\": \"US\",\n    \"province_code\": \"KY\"\n  },\n  \"customer\": {\n    \"id\": 115310627314723954,\n    \"email\": \"john@example.com\",\n    \"created_at\": null,\n    \"updated_at\": null,\n    \"first_name\": \"John\",\n    \"last_name\": \"Smith\",\n    \"state\": \"disabled\",\n    \"note\": null,\n    \"verified_email\": true,\n    \"multipass_identifier\": null,\n    \"tax_exempt\": false,\n    \"phone\": null,\n    \"email_marketing_consent\": {\n      \"state\": \"not_subscribed\",\n      \"opt_in_level\": null,\n      \"consent_updated_at\": null\n    },\n    \"sms_marketing_consent\": null,\n    \"tags\": \"\",\n    \"currency\": \"USD\",\n    \"tax_exemptions\": [\n\n    ],\n    \"admin_graphql_api_id\": \"gid://shopify/Customer/115310627314723954\",\n    \"default_address\": {\n      \"id\": 715243470612851245,\n      \"customer_id\": 115310627314723954,\n      \"first_name\": null,\n      \"last_name\": null,\n      \"company\": null,\n      \"address1\": \"123 Elm St.\",\n      \"address2\": null,\n      \"city\": \"Ottawa\",\n      \"province\": \"Ontario\",\n      \"country\": \"Canada\",\n      \"zip\": \"K2H7A8\",\n      \"phone\": \"123-123-1234\",\n      \"name\": \"\",\n      \"province_code\": \"ON\",\n      \"country_code\": \"CA\",\n      \"country_name\": \"Canada\",\n      \"default\": true\n    }\n  },\n  \"discount_applications\": [\n\n  ],\n  \"fulfillments\": [\n\n  ],\n  \"line_items\": [\n    {\n      \"id\": 866550311766439020,\n      \"admin_graphql_api_id\": \"gid://shopify/LineItem/866550311766439020\",\n      \"attributed_staffs\": [\n        {\n          \"id\": \"gid://shopify/StaffMember/902541635\",\n          \"quantity\": 1\n        }\n      ],\n      \"current_quantity\": 1,\n      \"fulfillable_quantity\": 1,\n      \"fulfillment_service\": \"manual\",\n      \"fulfillment_status\": null,\n      \"gift_card\": false,\n      \"grams\": 567,\n      \"name\": \"IPod Nano - 8GB\",\n      \"price\": \"199.00\",\n      \"price_set\": {\n        \"shop_money\": {\n          \"amount\": \"199.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"199.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"product_exists\": true,\n      \"product_id\": 632910392,\n      \"properties\": [\n\n      ],\n      \"quantity\": 1,\n      \"requires_shipping\": true,\n      \"sku\": \"IPOD2008PINK\",\n      \"taxable\": true,\n      \"title\": \"IPod Nano - 8GB\",\n      \"total_discount\": \"0.00\",\n      \"total_discount_set\": {\n        \"shop_money\": {\n          \"amount\": \"0.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"0.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"variant_id\": 808950810,\n      \"variant_inventory_management\": \"shopify\",\n      \"variant_title\": null,\n      \"vendor\": null,\n      \"tax_lines\": [\n\n      ],\n      \"duties\": [\n\n      ],\n      \"discount_allocations\": [\n\n      ]\n    },\n    {\n      \"id\": 141249953214522974,\n      \"admin_graphql_api_id\": \"gid://shopify/LineItem/141249953214522974\",\n      \"attributed_staffs\": [\n\n      ],\n      \"current_quantity\": 1,\n      \"fulfillable_quantity\": 1,\n      \"fulfillment_service\": \"manual\",\n      \"fulfillment_status\": null,\n      \"gift_card\": false,\n      \"grams\": 567,\n      \"name\": \"IPod Nano - 8GB\",\n      \"price\": \"199.00\",\n      \"price_set\": {\n        \"shop_money\": {\n          \"amount\": \"199.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"199.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"product_exists\": true,\n      \"product_id\": 632910392,\n      \"properties\": [\n\n      ],\n      \"quantity\": 1,\n      \"requires_shipping\": true,\n      \"sku\": \"IPOD2008PINK\",\n      \"taxable\": true,\n      \"title\": \"IPod Nano - 8GB\",\n      \"total_discount\": \"0.00\",\n      \"total_discount_set\": {\n        \"shop_money\": {\n          \"amount\": \"0.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"0.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"variant_id\": 808950810,\n      \"variant_inventory_management\": \"shopify\",\n      \"variant_title\": null,\n      \"vendor\": null,\n      \"tax_lines\": [\n\n      ],\n      \"duties\": [\n\n      ],\n      \"discount_allocations\": [\n\n      ]\n    }\n  ],\n  \"payment_terms\": null,\n  \"refunds\": [\n\n  ],\n  \"shipping_address\": {\n    \"first_name\": \"Steve\",\n    \"address1\": \"123 Shipping Street\",\n    \"phone\": \"555-555-SHIP\",\n    \"city\": \"Shippington\",\n    \"zip\": \"40003\",\n    \"province\": \"Kentucky\",\n    \"country\": \"United States\",\n    \"last_name\": \"Shipper\",\n    \"address2\": null,\n    \"company\": \"Shipping Company\",\n    \"latitude\": null,\n    \"longitude\": null,\n    \"name\": \"Steve Shipper\",\n    \"country_code\": \"US\",\n    \"province_code\": \"KY\"\n  },\n  \"shipping_lines\": [\n    {\n      \"id\": 271878346596884015,\n      \"carrier_identifier\": null,\n      \"code\": null,\n      \"discounted_price\": \"10.00\",\n      \"discounted_price_set\": {\n        \"shop_money\": {\n          \"amount\": \"10.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"10.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"phone\": null,\n      \"price\": \"10.00\",\n      \"price_set\": {\n        \"shop_money\": {\n          \"amount\": \"10.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"10.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"requested_fulfillment_service_id\": null,\n      \"source\": \"shopify\",\n      \"title\": \"Generic Shipping\",\n      \"tax_lines\": [\n\n      ],\n      \"discount_allocations\": [\n\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3003/webhook"
+					},
+					"response": [
+						{
+							"name": "order already exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 820982911946154508,\n  \"admin_graphql_api_id\": \"gid://shopify/Order/820982911946154508\",\n  \"app_id\": null,\n  \"browser_ip\": null,\n  \"buyer_accepts_marketing\": true,\n  \"cancel_reason\": \"customer\",\n  \"cancelled_at\": \"2021-12-31T19:00:00-05:00\",\n  \"cart_token\": null,\n  \"checkout_id\": null,\n  \"checkout_token\": null,\n  \"client_details\": null,\n  \"closed_at\": null,\n  \"confirmation_number\": null,\n  \"confirmed\": false,\n  \"contact_email\": \"jon@example.com\",\n  \"created_at\": \"2021-12-31T19:00:00-05:00\",\n  \"currency\": \"USD\",\n  \"current_subtotal_price\": \"398.00\",\n  \"current_subtotal_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"current_total_additional_fees_set\": null,\n  \"current_total_discounts\": \"0.00\",\n  \"current_total_discounts_set\": {\n    \"shop_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"current_total_duties_set\": null,\n  \"current_total_price\": \"398.00\",\n  \"current_total_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"current_total_tax\": \"0.00\",\n  \"current_total_tax_set\": {\n    \"shop_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"customer_locale\": \"en\",\n  \"device_id\": null,\n  \"discount_codes\": [\n\n  ],\n  \"email\": \"jon@example.com\",\n  \"estimated_taxes\": false,\n  \"financial_status\": \"voided\",\n  \"fulfillment_status\": \"pending\",\n  \"landing_site\": null,\n  \"landing_site_ref\": null,\n  \"location_id\": null,\n  \"merchant_of_record_app_id\": null,\n  \"name\": \"#9999\",\n  \"note\": null,\n  \"note_attributes\": [\n\n  ],\n  \"number\": 234,\n  \"order_number\": 1234,\n  \"order_status_url\": \"https://jsmith.myshopify.com/548380009/orders/123456abcd/authenticate?key=abcdefg\",\n  \"original_total_additional_fees_set\": null,\n  \"original_total_duties_set\": null,\n  \"payment_gateway_names\": [\n    \"visa\",\n    \"bogus\"\n  ],\n  \"phone\": null,\n  \"po_number\": null,\n  \"presentment_currency\": \"USD\",\n  \"processed_at\": null,\n  \"reference\": null,\n  \"referring_site\": null,\n  \"source_identifier\": null,\n  \"source_name\": \"web\",\n  \"source_url\": null,\n  \"subtotal_price\": \"388.00\",\n  \"subtotal_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"388.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"388.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"tags\": \"tag1, tag2\",\n  \"tax_exempt\": false,\n  \"tax_lines\": [\n\n  ],\n  \"taxes_included\": false,\n  \"test\": true,\n  \"token\": \"123456abcd\",\n  \"total_discounts\": \"20.00\",\n  \"total_discounts_set\": {\n    \"shop_money\": {\n      \"amount\": \"20.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"20.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"total_line_items_price\": \"398.00\",\n  \"total_line_items_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"398.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"total_outstanding\": \"398.00\",\n  \"total_price\": \"388.00\",\n  \"total_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"388.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"388.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"total_shipping_price_set\": {\n    \"shop_money\": {\n      \"amount\": \"10.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"10.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"total_tax\": \"0.00\",\n  \"total_tax_set\": {\n    \"shop_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    },\n    \"presentment_money\": {\n      \"amount\": \"0.00\",\n      \"currency_code\": \"USD\"\n    }\n  },\n  \"total_tip_received\": \"0.00\",\n  \"total_weight\": 0,\n  \"updated_at\": \"2021-12-31T19:00:00-05:00\",\n  \"user_id\": null,\n  \"billing_address\": {\n    \"first_name\": \"Steve\",\n    \"address1\": \"123 Shipping Street\",\n    \"phone\": \"555-555-SHIP\",\n    \"city\": \"Shippington\",\n    \"zip\": \"40003\",\n    \"province\": \"Kentucky\",\n    \"country\": \"United States\",\n    \"last_name\": \"Shipper\",\n    \"address2\": null,\n    \"company\": \"Shipping Company\",\n    \"latitude\": null,\n    \"longitude\": null,\n    \"name\": \"Steve Shipper\",\n    \"country_code\": \"US\",\n    \"province_code\": \"KY\"\n  },\n  \"customer\": {\n    \"id\": 115310627314723954,\n    \"email\": \"john@example.com\",\n    \"created_at\": null,\n    \"updated_at\": null,\n    \"first_name\": \"John\",\n    \"last_name\": \"Smith\",\n    \"state\": \"disabled\",\n    \"note\": null,\n    \"verified_email\": true,\n    \"multipass_identifier\": null,\n    \"tax_exempt\": false,\n    \"phone\": null,\n    \"email_marketing_consent\": {\n      \"state\": \"not_subscribed\",\n      \"opt_in_level\": null,\n      \"consent_updated_at\": null\n    },\n    \"sms_marketing_consent\": null,\n    \"tags\": \"\",\n    \"currency\": \"USD\",\n    \"tax_exemptions\": [\n\n    ],\n    \"admin_graphql_api_id\": \"gid://shopify/Customer/115310627314723954\",\n    \"default_address\": {\n      \"id\": 715243470612851245,\n      \"customer_id\": 115310627314723954,\n      \"first_name\": null,\n      \"last_name\": null,\n      \"company\": null,\n      \"address1\": \"123 Elm St.\",\n      \"address2\": null,\n      \"city\": \"Ottawa\",\n      \"province\": \"Ontario\",\n      \"country\": \"Canada\",\n      \"zip\": \"K2H7A8\",\n      \"phone\": \"123-123-1234\",\n      \"name\": \"\",\n      \"province_code\": \"ON\",\n      \"country_code\": \"CA\",\n      \"country_name\": \"Canada\",\n      \"default\": true\n    }\n  },\n  \"discount_applications\": [\n\n  ],\n  \"fulfillments\": [\n\n  ],\n  \"line_items\": [\n    {\n      \"id\": 866550311766439020,\n      \"admin_graphql_api_id\": \"gid://shopify/LineItem/866550311766439020\",\n      \"attributed_staffs\": [\n        {\n          \"id\": \"gid://shopify/StaffMember/902541635\",\n          \"quantity\": 1\n        }\n      ],\n      \"current_quantity\": 1,\n      \"fulfillable_quantity\": 1,\n      \"fulfillment_service\": \"manual\",\n      \"fulfillment_status\": null,\n      \"gift_card\": false,\n      \"grams\": 567,\n      \"name\": \"IPod Nano - 8GB\",\n      \"price\": \"199.00\",\n      \"price_set\": {\n        \"shop_money\": {\n          \"amount\": \"199.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"199.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"product_exists\": true,\n      \"product_id\": 632910392,\n      \"properties\": [\n\n      ],\n      \"quantity\": 1,\n      \"requires_shipping\": true,\n      \"sku\": \"IPOD2008PINK\",\n      \"taxable\": true,\n      \"title\": \"IPod Nano - 8GB\",\n      \"total_discount\": \"0.00\",\n      \"total_discount_set\": {\n        \"shop_money\": {\n          \"amount\": \"0.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"0.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"variant_id\": 808950810,\n      \"variant_inventory_management\": \"shopify\",\n      \"variant_title\": null,\n      \"vendor\": null,\n      \"tax_lines\": [\n\n      ],\n      \"duties\": [\n\n      ],\n      \"discount_allocations\": [\n\n      ]\n    },\n    {\n      \"id\": 141249953214522974,\n      \"admin_graphql_api_id\": \"gid://shopify/LineItem/141249953214522974\",\n      \"attributed_staffs\": [\n\n      ],\n      \"current_quantity\": 1,\n      \"fulfillable_quantity\": 1,\n      \"fulfillment_service\": \"manual\",\n      \"fulfillment_status\": null,\n      \"gift_card\": false,\n      \"grams\": 567,\n      \"name\": \"IPod Nano - 8GB\",\n      \"price\": \"199.00\",\n      \"price_set\": {\n        \"shop_money\": {\n          \"amount\": \"199.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"199.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"product_exists\": true,\n      \"product_id\": 632910392,\n      \"properties\": [\n\n      ],\n      \"quantity\": 1,\n      \"requires_shipping\": true,\n      \"sku\": \"IPOD2008PINK\",\n      \"taxable\": true,\n      \"title\": \"IPod Nano - 8GB\",\n      \"total_discount\": \"0.00\",\n      \"total_discount_set\": {\n        \"shop_money\": {\n          \"amount\": \"0.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"0.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"variant_id\": 808950810,\n      \"variant_inventory_management\": \"shopify\",\n      \"variant_title\": null,\n      \"vendor\": null,\n      \"tax_lines\": [\n\n      ],\n      \"duties\": [\n\n      ],\n      \"discount_allocations\": [\n\n      ]\n    }\n  ],\n  \"payment_terms\": null,\n  \"refunds\": [\n\n  ],\n  \"shipping_address\": {\n    \"first_name\": \"Steve\",\n    \"address1\": \"123 Shipping Street\",\n    \"phone\": \"555-555-SHIP\",\n    \"city\": \"Shippington\",\n    \"zip\": \"40003\",\n    \"province\": \"Kentucky\",\n    \"country\": \"United States\",\n    \"last_name\": \"Shipper\",\n    \"address2\": null,\n    \"company\": \"Shipping Company\",\n    \"latitude\": null,\n    \"longitude\": null,\n    \"name\": \"Steve Shipper\",\n    \"country_code\": \"US\",\n    \"province_code\": \"KY\"\n  },\n  \"shipping_lines\": [\n    {\n      \"id\": 271878346596884015,\n      \"carrier_identifier\": null,\n      \"code\": null,\n      \"discounted_price\": \"10.00\",\n      \"discounted_price_set\": {\n        \"shop_money\": {\n          \"amount\": \"10.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"10.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"phone\": null,\n      \"price\": \"10.00\",\n      \"price_set\": {\n        \"shop_money\": {\n          \"amount\": \"10.00\",\n          \"currency_code\": \"USD\"\n        },\n        \"presentment_money\": {\n          \"amount\": \"10.00\",\n          \"currency_code\": \"USD\"\n        }\n      },\n      \"requested_fulfillment_service_id\": null,\n      \"source\": \"shopify\",\n      \"title\": \"Generic Shipping\",\n      \"tax_lines\": [\n\n      ],\n      \"discount_allocations\": [\n\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:3003/webhook"
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "52"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"34-rlKccw1E+/fV8niQk4oFitDfPro\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 Mar 2024 12:16:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 500,\n    \"message\": \"Internal server error\"\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
