@@ -74,6 +74,29 @@ services:
       rabbitmq:
         condition: service_healthy
 
+  shopify:
+    build:
+      context: .
+      dockerfile: ./apps/shopify/Dockerfile
+    restart: always
+    environment:
+      - HTTP_PORT=3003
+      - TCP_PORT=53003
+      - SHOPIFY_ACCESS_TOKEN=${SHOPIFY_ACCESS_TOKEN}
+      - SHOPIFY_STORE_URL=${SHOPIFY_STORE_URL}
+      - SHOPIFY_API_VERSION="2024-01"
+      - ORDERS_HOST=orders
+      - ORDERS_PORT=53002
+      - RABBITMQ_URI=amqp://rabbitmq:5672
+    ports:
+      - 3003:3003
+      - 53003:53003
+    depends_on:
+      postgres:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+
   postgres:
     image: postgres
     ports:
@@ -92,5 +115,4 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-
 
