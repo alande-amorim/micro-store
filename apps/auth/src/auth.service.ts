@@ -21,6 +21,7 @@ export class AuthService {
 
   async verifyPassword(email: string, password: string) {
     const user = await this.db.user.findUnique({ where: { email } });
+    if (!user) return null;
     const isValid = await compare(password, user.password);
 
     return isValid ? user : null;
