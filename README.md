@@ -38,9 +38,7 @@ Postman collection is provided: `./docs/postman_collection-v1.0.json`
 3. Orders service (swagger: http://localhost:3002/api)
 4. Shopify service (swagger: http://localhost:3003/api)
 
-
 ## Known issues
- - not synchronizing to Shopify while running on Docker 😢
  - no tests
  - there are a few untreated RPC timeouts between services
  - there is no Shopify GraphQL create order mutation
