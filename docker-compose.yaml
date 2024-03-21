@@ -24,6 +24,32 @@ services:
       rabbitmq:
         condition: service_healthy
         
+  products:
+    build:
+      context: .
+      args:
+        - APP=products
+    restart: always
+    environment:
+      - HTTP_PORT=3001
+      - TCP_PORT=53001
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/products?schema=public
+      - AUTH_HOST=auth
+      - AUTH_PORT=53000
+      - SHOPIFY_HOST=shopify
+      - SHOPIFY_PORT=53003
+      - RABBITMQ_URI=amqp://rabbitmq:5672
+      - SENTRY_DSN=
+    command: sh -cx "npx prisma db push && node dist/apps/products/main"
+    ports:
+      - 3001:3001
+      - 53001:53001
+    depends_on:
+      postgres:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+
   orders:
     build:
       context: .
@@ -41,7 +67,7 @@ services:
     command: sh -cx "npx prisma db push && node dist/apps/orders/main"
     ports:
       - 3002:3002
-      - 53002:53000
+      - 53002:53002
     depends_on:
       postgres:
         condition: service_started
